@@ -1,0 +1,4 @@
+allprojects {
+    group = "ru.brikster"
+    version = "$version"
+}

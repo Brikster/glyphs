@@ -1,0 +1,26 @@
+plugins {
+    id "java-library"
+}
+
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17
+
+tasks {
+    compileJava {
+        options.encoding = 'UTF-8'
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.unnamed.team/repository/unnamed-public/" }
+}
+
+def lombokVersion = "1.18.24"
+
+dependencies {
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+    api "team.unnamed:creative-api:0.3.0-SNAPSHOT"
+    implementation "net.kyori:adventure-api:4.11.0"
+}
