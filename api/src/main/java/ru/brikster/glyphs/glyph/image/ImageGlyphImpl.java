@@ -87,6 +87,9 @@ public class ImageGlyphImpl implements ImageGlyph {
 
     @Override
     public @NotNull Character character() throws ResourceNotProducedException {
+        if (fontProviders == null) {
+            throw new ResourceNotProducedException();
+        }
         return character;
     }
 
