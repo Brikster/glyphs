@@ -13,13 +13,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public abstract class AbstractSpacesGlyphResourceProducer implements SpacesGlyphResourceProducer {
 
-    private final Key key;
+    private final Key fontKey;
 
     protected Map<Integer, Character> mapping;
 
     @Override
-    public @NotNull Key key() {
-        return key;
+    public @NotNull Key fontKey() {
+        return fontKey;
     }
 
     @Override
@@ -36,7 +36,7 @@ public abstract class AbstractSpacesGlyphResourceProducer implements SpacesGlyph
             throw new IllegalArgumentException();
         }
 
-        return new SpacesGlyph(key, mapping.get(length), length);
+        return new SpacesGlyph(fontKey, new char[] {mapping.get(length)}, length);
     }
 
 }

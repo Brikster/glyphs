@@ -3,6 +3,7 @@ package ru.brikster.glyphs.glyph.image;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.compile.ArbitraryCharacterFactory;
+import ru.brikster.glyphs.glyph.Glyph;
 import ru.brikster.glyphs.glyph.exception.ResourceAlreadyProducedException;
 import ru.brikster.glyphs.glyph.exception.ResourceNotProducedException;
 import ru.brikster.glyphs.util.ImageUtil;
@@ -13,7 +14,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 import javax.imageio.ImageIO;
-import java.io.BufferedInputStream;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Collection;
@@ -23,7 +24,7 @@ import java.util.Set;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class ImageGlyphImpl implements ImageGlyph {
 
-    private final Key key;
+    private final Key fontKey;
     private final Texture texture;
     private final TextureProperties properties;
 
@@ -33,8 +34,8 @@ public class ImageGlyphImpl implements ImageGlyph {
     private int width = -1;
 
     @Override
-    public @NotNull Key key() {
-        return key;
+    public @NotNull Key fontKey() {
+        return fontKey;
     }
 
     @Override
@@ -72,7 +73,11 @@ public class ImageGlyphImpl implements ImageGlyph {
     public int width() {
         if (width == -1) {
             try {
-                width = ImageUtil.calculateWidth(ImageIO.read(new ByteArrayInputStream(texture.data().toByteArray()))) + 1;
+                BufferedImage image = ImageIO.read(new ByteArrayInputStream(texture.data().toByteArray()));
+                int fileHeight = image.getHeight();
+                width = (int) Math.ceil(
+                        ((double) properties.height() / (double) fileHeight)
+                                * ImageUtil.calculateWidth(image)) + Glyph.SEPARATOR_WIDTH;
             } catch (IOException e) {
                 e.printStackTrace();
             }

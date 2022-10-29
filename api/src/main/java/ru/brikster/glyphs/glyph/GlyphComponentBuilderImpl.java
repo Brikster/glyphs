@@ -14,26 +14,65 @@ import java.util.List;
 public class GlyphComponentBuilderImpl implements GlyphComponentBuilder {
 
     private final SpacesGlyphResourceProducer spacesProducer;
+    private final int initialPosition;
+    private final Component baseComponent;
 
     private final List<Glyph> glyphs = new ArrayList<>();
 
+    private int previousElementsWidth;
+
     @Override
-    public @NotNull GlyphComponentBuilder append(int position, @NotNull Glyph glyph) {
-        glyphs.add(spacesProducer.translate(position));
+    public @NotNull GlyphComponentBuilder append(PositionType positionType, int position, @NotNull AppendableGlyph glyph) {
+        if (positionType == PositionType.ABSOLUTE && previousElementsWidth != 0) {
+            glyphs.add(spacesProducer.translate((-1) * previousElementsWidth));
+            previousElementsWidth = 0;
+        }
+
+        if (position != 0) {
+            glyphs.add(spacesProducer.translate(position));
+        }
+
         glyphs.add(glyph);
-        glyphs.add(spacesProducer.translate(glyph.width()));
+        this.previousElementsWidth += position + glyph.width();
+
+        return this;
+    }
+
+    @Override
+    public @NotNull GlyphComponentBuilder append(PositionType positionType, int position, @NotNull List<? extends @NotNull AppendableGlyph> glyphList) {
+        if (positionType == PositionType.ABSOLUTE && previousElementsWidth != 0) {
+            glyphs.add(spacesProducer.translate((-1) * previousElementsWidth));
+            previousElementsWidth = 0;
+        }
+
+        if (position != 0) {
+            glyphs.add(spacesProducer.translate(position));
+        }
+
+        int width = 0;
+        for (AppendableGlyph glyph : glyphList) {
+            glyphs.add(glyph);
+            width += glyph.width();
+        }
+
+        this.previousElementsWidth += position + width;
+
         return this;
     }
 
     @Override
     public @NotNull Component build() {
-        var componentBuilder = Component.text();
+        var component = baseComponent;
 
-        for (Glyph glyph : glyphs) {
-            componentBuilder.append(glyph.toAdventure());
+        if (initialPosition != 0) {
+            component = component.append(spacesProducer.translate(initialPosition).toAdventure());
         }
 
-        return componentBuilder.build();
+        for (Glyph glyph : glyphs) {
+            component = component.append(glyph.toAdventure());
+        }
+
+        return component;
     }
 
 }

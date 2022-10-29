@@ -17,7 +17,7 @@ public class DefaultGlyphCompiler implements GlyphCompiler {
 
         Set<Key> usedKeys = producers
                 .stream()
-                .map(ResourceProducer::key)
+                .map(ResourceProducer::fontKey)
                 .collect(Collectors.toUnmodifiableSet());
 
         for (Key key : usedKeys) {
@@ -27,7 +27,7 @@ public class DefaultGlyphCompiler implements GlyphCompiler {
 
             for (ResourceProducer producer : producers
                     .stream()
-                    .filter(fontProviderProducer -> fontProviderProducer.key().equals(key))
+                    .filter(fontProviderProducer -> fontProviderProducer.fontKey().equals(key))
                     .toList()) {
                 producer.produceResources(characterFactory);
                 fontProviders.addAll(producer.fontProviders());

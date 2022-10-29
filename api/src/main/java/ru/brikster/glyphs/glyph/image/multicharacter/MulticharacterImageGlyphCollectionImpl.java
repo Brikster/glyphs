@@ -1,8 +1,11 @@
 package ru.brikster.glyphs.glyph.image.multicharacter;
 
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.brikster.glyphs.compile.ArbitraryCharacterFactory;
+import ru.brikster.glyphs.glyph.Glyph;
 import ru.brikster.glyphs.glyph.exception.ResourceAlreadyProducedException;
 import ru.brikster.glyphs.glyph.exception.ResourceNotProducedException;
 import ru.brikster.glyphs.glyph.image.TextureProperties;
@@ -22,7 +25,7 @@ import java.util.*;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class MulticharacterImageGlyphCollectionImpl implements MulticharacterImageGlyphCollection {
 
-    private final Key key;
+    private final Key fontKey;
     private final Texture texture;
     private final TextureProperties properties;
     private final List<String> charactersMapping;
@@ -31,9 +34,11 @@ public class MulticharacterImageGlyphCollectionImpl implements MulticharacterIma
 
     private Set<FontProvider> fontProviders;
 
+    private BufferedImage image;
+
     @Override
-    public @NotNull Key key() {
-        return key;
+    public @NotNull Key fontKey() {
+        return fontKey;
     }
 
     @Override
@@ -43,7 +48,7 @@ public class MulticharacterImageGlyphCollectionImpl implements MulticharacterIma
         }
 
         var fontProviderBuilder = FontProvider.bitMap();
-        fontProviderBuilder.file(key);
+        fontProviderBuilder.file(texture.key());
         fontProviderBuilder.ascent(properties.ascent());
         fontProviderBuilder.height(properties.height());
 
@@ -75,7 +80,7 @@ public class MulticharacterImageGlyphCollectionImpl implements MulticharacterIma
     }
 
     @Override
-    public @NotNull PreparedImageGlyph translate(@NotNull Character character) throws IllegalArgumentException {
+    public @NotNull PreparedImageGlyph translate(@NotNull Character character, @Nullable TextColor color) throws IllegalArgumentException {
         if (!originToArbitraryCharacterMap.containsKey(character)) {
             throw new IllegalArgumentException();
         }
@@ -85,30 +90,37 @@ public class MulticharacterImageGlyphCollectionImpl implements MulticharacterIma
             String line = charactersMapping.get(lineIndex);
             for (int characterIndex = 0; characterIndex < line.toCharArray().length; characterIndex++) {
                 if (line.charAt(characterIndex) == character) {
-                    BufferedImage image = null;
-                    try {
-                        image = ImageIO.read(new ByteArrayInputStream(texture.data().toByteArray()));
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (image == null) {
+                        cacheImage();
                     }
 
                     if (image == null) {
                         throw new IllegalArgumentException();
                     }
 
-                    int partWidth = image.getWidth() / charactersMapping.get(0).length();
-                    int partHeight = image.getHeight() / charactersMapping.size();
+                    int filePartWidth = image.getWidth() / charactersMapping.get(0).length();
+                    int filePartHeight = image.getHeight() / charactersMapping.size();
 
-                    width = ImageUtil.calculateWidth(
-                            image, partWidth * characterIndex, partHeight * lineIndex,
-                            (partWidth + 1) * characterIndex, (partHeight + 1) * lineIndex
-                    );
+                    width = (int) Math.ceil(
+                            ((double) properties.height() / (double) filePartHeight)
+                                    * ImageUtil.calculateWidth(
+                                            image, filePartWidth * characterIndex, filePartHeight * lineIndex,
+                                    filePartWidth * (characterIndex + 1), filePartHeight * (lineIndex + 1)
+                    )) + Glyph.SEPARATOR_WIDTH;
                     break;
                 }
             }
         }
 
-        return new PreparedImageGlyph(key, originToArbitraryCharacterMap.get(character), width + 1);
+        return new PreparedImageGlyph(fontKey, originToArbitraryCharacterMap.get(character), width, color);
+    }
+
+    private void cacheImage() {
+        try {
+            image = ImageIO.read(new ByteArrayInputStream(texture.data().toByteArray()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

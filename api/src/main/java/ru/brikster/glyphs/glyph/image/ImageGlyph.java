@@ -4,11 +4,12 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.compile.ResourceProducer;
+import ru.brikster.glyphs.glyph.AppendableGlyph;
 import ru.brikster.glyphs.glyph.Glyph;
 import ru.brikster.glyphs.glyph.exception.ResourceNotProducedException;
 import team.unnamed.creative.texture.Texture;
 
-public interface ImageGlyph extends Glyph, ResourceProducer {
+public interface ImageGlyph extends AppendableGlyph, ResourceProducer {
 
     static @NotNull ImageGlyph of(@NotNull Key key,
                                   @NotNull Texture texture,
@@ -18,7 +19,7 @@ public interface ImageGlyph extends Glyph, ResourceProducer {
 
     static @NotNull ImageGlyph of(@NotNull Texture texture,
                                   @NotNull TextureProperties properties) {
-        return of(Glyph.DEFAULT_KEY, texture, properties);
+        return of(Glyph.DEFAULT_FONT_KEY, texture, properties);
     }
     
     @NotNull Character character() throws ResourceNotProducedException;
@@ -26,7 +27,7 @@ public interface ImageGlyph extends Glyph, ResourceProducer {
     @NotNull Texture texture();
 
     default @NotNull Component toAdventure() throws ResourceNotProducedException {
-        return Component.text(character()).font(key());
+        return Component.text(character()).font(fontKey());
     }
 
 }

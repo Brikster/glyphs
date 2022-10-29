@@ -12,21 +12,27 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class SpacesGlyph implements Glyph {
 
+    private static final Key DEFAULT_SPACE_TEXTURE_KEY = Key.key(Glyph.DEFAULT_NAMESPACE, "space");
+
     private final Key key;
-    private final Character character;
+    private final char[] characters;
     private final int length;
 
-    public static @NotNull SpacesGlyphResourceProducer create(@NotNull Key key, @NotNull Writable spacesWritable) {
-        return new DefaultSpacesGlyphResourceProducer(key, spacesWritable);
+    public static @NotNull DefaultSpaceGlyph DEFAULT_SPACE_GLYPH = new DefaultSpaceGlyph();
+
+    public static @NotNull SpacesGlyphResourceProducer create(@NotNull Key fontKey,
+                                                              @NotNull Key textureKey,
+                                                              @NotNull Writable spacesWritable) {
+        return new DefaultSpacesGlyphResourceProducer(fontKey, textureKey, spacesWritable);
     }
 
     public static SpacesGlyphResourceProducer create(@NotNull Writable spacesWritable) {
-        return create(Glyph.DEFAULT_KEY, spacesWritable);
+        return create(Glyph.DEFAULT_FONT_KEY, DEFAULT_SPACE_TEXTURE_KEY, spacesWritable);
     }
 
     @Override
     public @NotNull Component toAdventure() {
-        return Component.text(character).font(key);
+        return Component.text(new String(characters)).font(key);
     }
 
     @Override

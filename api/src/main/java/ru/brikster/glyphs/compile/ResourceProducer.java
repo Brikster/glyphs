@@ -12,7 +12,7 @@ import java.util.Collections;
 
 public interface ResourceProducer {
 
-    @NotNull Key key();
+    @NotNull Key fontKey();
 
     void produceResources(ArbitraryCharacterFactory characterFactory) throws ResourceAlreadyProducedException;
 

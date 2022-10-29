@@ -7,7 +7,11 @@ import ru.brikster.glyphs.glyph.exception.ResourceNotProducedException;
 
 public interface Glyph {
 
-    Key DEFAULT_KEY = Key.key("glyphs", "default");
+    String DEFAULT_NAMESPACE = "glyphs";
+
+    Key DEFAULT_FONT_KEY = Key.key(DEFAULT_NAMESPACE, "default");
+
+    int SEPARATOR_WIDTH = 1;
 
     @NotNull Component toAdventure() throws ResourceNotProducedException;
 

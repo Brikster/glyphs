@@ -2,3 +2,7 @@ plugins {
     id "glyphs.common"
     id "glyphs.publish"
 }
+
+dependencies {
+    compileOnly project(":api")
+}
