@@ -21,7 +21,7 @@ public interface ImageGlyph extends AppendableGlyph, ResourceProducer {
                                   @NotNull TextureProperties properties) {
         return of(Glyph.DEFAULT_FONT_KEY, texture, properties);
     }
-    
+
     @NotNull Character character() throws ResourceNotProducedException;
 
     @NotNull Texture texture();

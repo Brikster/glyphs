@@ -54,16 +54,16 @@ public final class GlyphResources {
                 Texture.of(textureKey, MINECRAFT_FONT_IMAGE_WRITABLE),
                 propertiesList,
                 List.of("      АБВГДЕЖЗИК",
-                    "ЛМНОПРСТУФХЦЧШЩЪ",
-                    "ЫЬЭЮЯабвгдежзикл",
-                    "мнопрстуфхцчшщъы",
-                    "ьэюяйЙёЁ        ",
-                    "₽!\"#$%&'()*+,-./",
-                    "0123456789: <=>?",
-                    "@ABCDEFGHIJKLMNO",
-                    "PQRSTUVWXYZ[\\]^_",
-                    "`abcdefghijklmno",
-                    "pqrstuvwxyz{|}  ")
+                        "ЛМНОПРСТУФХЦЧШЩЪ",
+                        "ЫЬЭЮЯабвгдежзикл",
+                        "мнопрстуфхцчшщъы",
+                        "ьэюяйЙёЁ        ",
+                        "₽!\"#$%&'()*+,-./",
+                        "0123456789: <=>?",
+                        "@ABCDEFGHIJKLMNO",
+                        "PQRSTUVWXYZ[\\]^_",
+                        "`abcdefghijklmno",
+                        "pqrstuvwxyz{|}  ")
         );
     }
 

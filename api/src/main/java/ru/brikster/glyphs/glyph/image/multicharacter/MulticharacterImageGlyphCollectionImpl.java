@@ -104,9 +104,9 @@ public class MulticharacterImageGlyphCollectionImpl implements MulticharacterIma
                     width = (int) Math.ceil(
                             ((double) properties.height() / (double) filePartHeight)
                                     * ImageUtil.calculateWidth(
-                                            image, filePartWidth * characterIndex, filePartHeight * lineIndex,
+                                    image, filePartWidth * characterIndex, filePartHeight * lineIndex,
                                     filePartWidth * (characterIndex + 1), filePartHeight * (lineIndex + 1)
-                    )) + Glyph.SEPARATOR_WIDTH;
+                            )) + Glyph.SEPARATOR_WIDTH;
                     break;
                 }
             }

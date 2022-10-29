@@ -12,10 +12,7 @@ import ru.brikster.glyphs.glyph.image.TextureProperties;
 import team.unnamed.creative.font.FontProvider;
 import team.unnamed.creative.texture.Texture;
 
-import lombok.RequiredArgsConstructor;
-
 import java.util.*;
-import java.util.Map.Entry;
 
 public class LanguageGlyphCollectionImpl implements LanguageGlyphCollection {
 

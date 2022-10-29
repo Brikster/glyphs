@@ -8,14 +8,14 @@ import java.util.Collection;
 
 public interface GlyphCompiler {
 
+    static GlyphCompiler instance() {
+        return new DefaultGlyphCompiler();
+    }
+
     @NotNull Collection<@NotNull FileResource> compile(@NotNull Collection<@NotNull ResourceProducer> resourceProducerCollection);
 
     default @NotNull Collection<@NotNull FileResource> compile(@NotNull ResourceProducer... resourceProducer) {
         return compile(Arrays.asList(resourceProducer));
-    }
-
-    static GlyphCompiler instance() {
-        return new DefaultGlyphCompiler();
     }
 
 }

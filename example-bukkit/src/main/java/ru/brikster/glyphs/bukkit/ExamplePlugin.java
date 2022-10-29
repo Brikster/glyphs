@@ -17,7 +17,7 @@ import ru.brikster.glyphs.glyph.GlyphComponentBuilder;
 import ru.brikster.glyphs.glyph.GlyphComponentBuilder.PositionType;
 import ru.brikster.glyphs.glyph.image.ImageGlyph;
 import ru.brikster.glyphs.glyph.image.TextureProperties;
-import ru.brikster.glyphs.glyph.space.SpacesGlyph;
+import ru.brikster.glyphs.glyph.space.mojang.MojangSpacesGlyph;
 import ru.brikster.glyphs.resources.GlyphResources;
 import team.unnamed.creative.file.FileResource;
 import team.unnamed.creative.file.FileTree;
@@ -40,36 +40,6 @@ public final class ExamplePlugin extends JavaPlugin {
     private static final GlyphCompiler COMPILER = GlyphCompiler.instance();
 
     private ChestGui chestGui;
-
-    @Override
-    public void onEnable() {
-        var spaces = SpacesGlyph.create(GlyphResources.SPACE_IMAGE_WRITABLE);
-        var guiBackground = ImageGlyph.of(Texture.of(
-                        Key.key(Glyph.DEFAULT_NAMESPACE, "gui/gui_background"),
-                        GlyphResources.resourceFromJar("gui_background.png")),
-                new TextureProperties(256, 19));
-        var font = GlyphResources.minecraftFontGlyphCollection(
-                List.of(new TextureProperties(12, -6),
-                        new TextureProperties(8, -24),
-                        new TextureProperties(8, -36)));
-
-        var resources = COMPILER.compile(spaces, guiBackground, font);
-        createResourcepack(resources);
-
-        var titleComponent = GlyphComponentBuilder.gui(spaces)
-                .append(guiBackground)
-                .append(16, font.translate(12, -6, "Example text"))
-                .append(16, font.translate(8, -24, "Hello "))
-                .append(PositionType.RELATIVE, font.translate(8, -24, "world..."))
-                .append(PositionType.ABSOLUTE, 16, font.translate(8, -36, "Hello world...", NamedTextColor.LIGHT_PURPLE))
-                .build();
-
-        getLogger().info(GsonComponentSerializer.gson().serialize(titleComponent));
-
-        this.chestGui = new ChestGui(4, ComponentHolder.of(titleComponent));
-
-        Objects.requireNonNull(getCommand("glyphs")).setExecutor(this);
-    }
 
     @SneakyThrows
     private void createResourcepack(Collection<FileResource> resources) {
@@ -98,6 +68,36 @@ public final class ExamplePlugin extends JavaPlugin {
             sender.sendMessage("You're not a player");
         }
         return true;
+    }
+
+    @Override
+    public void onEnable() {
+        var spaces = MojangSpacesGlyph.create();
+        var guiBackground = ImageGlyph.of(Texture.of(
+                        Key.key(Glyph.DEFAULT_NAMESPACE, "gui/gui_background"),
+                        GlyphResources.resourceFromJar("gui_background.png")),
+                new TextureProperties(256, 19));
+        var font = GlyphResources.minecraftFontGlyphCollection(
+                List.of(new TextureProperties(12, -6),
+                        new TextureProperties(8, -24),
+                        new TextureProperties(8, -36)));
+
+        var resources = COMPILER.compile(spaces, guiBackground, font);
+        createResourcepack(resources);
+
+        var titleComponent = GlyphComponentBuilder.gui(spaces)
+                .append(guiBackground)
+                .append(16, font.translate(12, -6, "Example text"))
+                .append(16, font.translate(8, -24, "Hello "))
+                .append(PositionType.RELATIVE, font.translate(8, -24, "world..."))
+                .append(PositionType.ABSOLUTE, 16, font.translate(8, -36, "Hello world...", NamedTextColor.LIGHT_PURPLE))
+                .build();
+
+        getLogger().info(GsonComponentSerializer.gson().serialize(titleComponent));
+
+        this.chestGui = new ChestGui(4, ComponentHolder.of(titleComponent));
+
+        Objects.requireNonNull(getCommand("glyphs")).setExecutor(this);
     }
 
 }

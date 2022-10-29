@@ -9,11 +9,6 @@ import java.util.List;
 
 public interface GlyphComponentBuilder {
 
-    enum PositionType {
-        ABSOLUTE,
-        RELATIVE
-    }
-
     static @NotNull GlyphComponentBuilder universal(SpacesGlyphResourceProducer spacesProducer) {
         return new GlyphComponentBuilderImpl(spacesProducer, 0, Component.text(""));
     }
@@ -34,11 +29,11 @@ public interface GlyphComponentBuilder {
         return append(positionType, 0, glyphList);
     }
 
-    // Append with default position type
-
     default @NotNull GlyphComponentBuilder append(int position, @NotNull AppendableGlyph glyph) {
         return append(PositionType.ABSOLUTE, position, glyph);
     }
+
+    // Append with default position type
 
     default @NotNull GlyphComponentBuilder append(@NotNull AppendableGlyph glyph) {
         return append(PositionType.ABSOLUTE, glyph);
@@ -53,5 +48,10 @@ public interface GlyphComponentBuilder {
     }
 
     @NotNull Component build();
+
+    enum PositionType {
+        ABSOLUTE,
+        RELATIVE
+    }
 
 }
