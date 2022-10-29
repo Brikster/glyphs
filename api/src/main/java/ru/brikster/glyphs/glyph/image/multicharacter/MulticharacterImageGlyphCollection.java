@@ -30,7 +30,11 @@ public interface MulticharacterImageGlyphCollection extends ResourceProducer {
     default @NotNull List<@NotNull PreparedImageGlyph> translate(@NotNull String text) throws IllegalArgumentException {
         List<PreparedImageGlyph> glyphs = new ArrayList<>();
         for (char character : text.toCharArray()) {
-            glyphs.add(translate(character));
+            if (character == ' ') {
+                glyphs.add(new PreparedImageGlyph(key(), ' ', 5));
+            } else {
+                glyphs.add(translate(character));
+            }
         }
         return glyphs;
     }
