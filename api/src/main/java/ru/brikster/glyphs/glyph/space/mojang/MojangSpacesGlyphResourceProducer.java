@@ -3,12 +3,9 @@ package ru.brikster.glyphs.glyph.space.mojang;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.compile.ArbitraryCharacterFactory;
-import ru.brikster.glyphs.glyph.EmptyGlyph;
-import ru.brikster.glyphs.glyph.Glyph;
 import ru.brikster.glyphs.glyph.exception.ResourceAlreadyProducedException;
 import ru.brikster.glyphs.glyph.exception.ResourceNotProducedException;
 import ru.brikster.glyphs.glyph.space.AbstractSpacesGlyphResourceProducer;
-import ru.brikster.glyphs.glyph.space.SpacesGlyph;
 import team.unnamed.creative.font.FontProvider;
 
 import java.util.Collection;
@@ -34,7 +31,7 @@ public class MojangSpacesGlyphResourceProducer extends AbstractSpacesGlyphResour
 
         var fontProviderBuilder = FontProvider.space();
 
-        for (int length = 1; length <= 2048; length++) {
+        for (int length = 1; length <= 2048; length *= 2) {
             fontProviderBuilder.advance(retrieveCharacter(characterFactory, length), length);
             fontProviderBuilder.advance(retrieveCharacter(characterFactory, length * (-1)), length * (-1));
         }

@@ -5,9 +5,12 @@ import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.glyph.EmptyGlyph;
 import ru.brikster.glyphs.glyph.Glyph;
 import ru.brikster.glyphs.glyph.exception.ResourceNotProducedException;
+import ru.brikster.glyphs.util.ArrayUtil;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -32,11 +35,25 @@ public abstract class AbstractSpacesGlyphResourceProducer implements SpacesGlyph
             return EmptyGlyph.INSTANCE;
         }
 
-        if (!mapping.containsKey(length)) {
-            throw new IllegalArgumentException();
+        int sign = length > 0 ? 1 : -1;
+        String binaryString = Integer.toBinaryString(Math.abs(length));
+
+        List<Character> characters = new ArrayList<>();
+
+        int currentRankLength = 1;
+        for (int index = 0; index < binaryString.length(); index++) {
+            char digit = binaryString.charAt(binaryString.length() - index - 1);
+            if (digit == '1') {
+                int partLength = currentRankLength * sign;
+                if (!mapping.containsKey(partLength)) {
+                    throw new IllegalArgumentException("Too much length");
+                }
+                characters.add(mapping.get(partLength));
+            }
+            currentRankLength *= 2;
         }
 
-        return new SpacesGlyph(fontKey, new char[] {mapping.get(length)}, length);
+        return new SpacesGlyph(fontKey(), ArrayUtil.toCharArray(characters), length);
     }
 
 }
