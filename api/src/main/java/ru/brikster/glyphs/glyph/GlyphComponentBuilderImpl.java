@@ -21,7 +21,7 @@ public class GlyphComponentBuilderImpl implements GlyphComponentBuilder {
     public @NotNull GlyphComponentBuilder append(int position, @NotNull Glyph glyph) {
         glyphs.add(spacesProducer.translate(position));
         glyphs.add(glyph);
-//        glyphs.add()
+        glyphs.add(spacesProducer.translate(glyph.width()));
         return this;
     }
 
