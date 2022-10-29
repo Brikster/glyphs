@@ -68,24 +68,12 @@ public final class GlyphResources {
     }
 
     public static LanguageGlyphCollection minecraftFontGlyphCollection(@NotNull List<@NotNull TextureProperties> propertiesList) {
-        return LanguageGlyphCollection.of(Glyph.DEFAULT_FONT_KEY,
-                Texture.of(Key.key(Glyph.DEFAULT_NAMESPACE, "minecraft_font"), MINECRAFT_FONT_IMAGE_WRITABLE),
-                propertiesList,
-                List.of("      АБВГДЕЖЗИК",
-                        "ЛМНОПРСТУФХЦЧШЩЪ",
-                        "ЫЬЭЮЯабвгдежзикл",
-                        "мнопрстуфхцчшщъы",
-                        "ьэюяйЙёЁ        ",
-                        "₽!\"#$%&'()*+,-./",
-                        "0123456789: <=>?",
-                        "@ABCDEFGHIJKLMNO",
-                        "PQRSTUVWXYZ[\\]^_",
-                        "`abcdefghijklmno",
-                        "pqrstuvwxyz{|}  ")
-        );
+        return minecraftFontGlyphCollection(Glyph.DEFAULT_FONT_KEY,
+                Key.key(Glyph.DEFAULT_NAMESPACE, "minecraft_font"),
+                propertiesList);
     }
 
-    public static Collection<FileResource> blankSlotResources(@NotNull Key modelKey, @NotNull Key itemKey) {
+    public static Collection<FileResource> blankSlotResources(@NotNull Key modelKey, @NotNull Key itemKey, int customModelData) {
         Model blankSlotModel = Model.builder()
                 .key(modelKey)
                 .parent(Model.ITEM_GENERATED)
@@ -96,10 +84,11 @@ public final class GlyphResources {
 
         Model paperItemModel = Model.builder()
                 .key(itemKey)
+                .parent(Model.ITEM_GENERATED)
                 .textures(ModelTexture.builder()
                         .layers(Collections.singletonList(itemKey))
                         .build())
-                .overrides(ItemOverride.of(modelKey, ItemPredicate.customModelData(2)))
+                .overrides(ItemOverride.of(modelKey, ItemPredicate.customModelData(customModelData)))
                 .build();
 
         Texture texture = Texture.of(modelKey, BLANK_SLOT_IMAGE_WRITABLE);
@@ -107,7 +96,7 @@ public final class GlyphResources {
     }
 
     public static Collection<FileResource> blankSlotResources() {
-        return blankSlotResources(Key.key(Glyph.DEFAULT_NAMESPACE, "blank_slot"), PAPER_ITEM_KEY);
+        return blankSlotResources(Key.key(Glyph.DEFAULT_NAMESPACE, "blank_slot"), PAPER_ITEM_KEY, 1);
     }
 
 }
