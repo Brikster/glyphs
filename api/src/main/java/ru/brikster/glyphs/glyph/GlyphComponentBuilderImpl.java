@@ -61,7 +61,16 @@ public class GlyphComponentBuilderImpl implements GlyphComponentBuilder {
     }
 
     @Override
-    public @NotNull Component build() {
+    public @NotNull Component build(boolean keepInitialPosition) {
+        if (keepInitialPosition) {
+            previousElementsWidth += initialPosition;
+
+            // Component should have zero width finally
+            if (previousElementsWidth != 0) {
+                glyphs.add(spacesProducer.translate((-1) * previousElementsWidth));
+            }
+        }
+
         var component = baseComponent;
 
         if (initialPosition != 0) {

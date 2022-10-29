@@ -47,7 +47,11 @@ public interface GlyphComponentBuilder {
         return append(PositionType.ABSOLUTE, glyphList);
     }
 
-    @NotNull Component build();
+    @NotNull Component build(boolean keepInitialPosition);
+
+    default @NotNull Component build() {
+        return build(true);
+    }
 
     enum PositionType {
         ABSOLUTE,
