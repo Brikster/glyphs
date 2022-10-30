@@ -42,13 +42,13 @@ Component resultComponent = GlyphComponentBuilder.universal(spaces)
         .build()
         .append(Component.newline().append(logoIndentComponent))
         .append(Component.newline()
-        .append(logoIndentComponent)
-        .append(Component.text("Glyphs", TextColor.fromHexString("#d84aff"), 
-            TextDecoration.BOLD)))
+            .append(logoIndentComponent)
+            .append(Component.text("Glyphs", TextColor.fromHexString("#d84aff"), 
+                TextDecoration.BOLD)))
         .append(Component.newline()
-        .append(logoIndentComponent)
-        .append(Component.text("<--- ", NamedTextColor.GRAY))
-        .append(Component.text("Here you can see Minecraft® logo", NamedTextColor.YELLOW)))
+            .append(logoIndentComponent)
+            .append(Component.text("<--- ", NamedTextColor.GRAY))
+            .append(Component.text("Here you can see Minecraft® logo", NamedTextColor.YELLOW)))
         .append(Component.newline().append(logoIndentComponent))
         .append(Component.newline().append(logoIndentComponent));
 
