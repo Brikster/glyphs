@@ -1,5 +1,6 @@
 # glyphs
 [![Apache 2.0 License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE.md)
+[![Maven Central](https://img.shields.io/maven-central/v/ru.brikster/glyphs-api)](https://search.maven.org/search?q=g:ru.brikster%20AND%20a:glyphs*)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Brikster/glyphs?color=yellow)](https://github.com/Brikster/glyphs/archive/master.zip)
 
 Library for convenient management of bitmap textures from Minecraft resourcepacks.
@@ -114,10 +115,7 @@ Also, that's required Minecraft 1.19 and higher to support all the library featu
 #### Gradle
 ```groovy
 repositories {
-    maven {
-        name "maven-central-snapshots"
-        url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-    }
+    mavenCentral()
 }
 
 dependencies {
