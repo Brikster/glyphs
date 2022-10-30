@@ -12,7 +12,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class PreparedImageGlyph implements AppendableGlyph {
+public class PreparedImageGlyph implements AppendableGlyph, ColorableGlyph {
 
     private final Key key;
     private final Character character;
@@ -31,7 +31,13 @@ public class PreparedImageGlyph implements AppendableGlyph {
         return width;
     }
 
-    public void setColor(@Nullable TextColor color) {
+    @Override
+    public @Nullable TextColor color() {
+        return color;
+    }
+
+    @Override
+    public void updateColor(@Nullable TextColor color) {
         this.color = color;
     }
 
