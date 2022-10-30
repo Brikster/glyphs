@@ -29,12 +29,12 @@ public interface GlyphComponentBuilder {
         return append(positionType, 0, glyphList);
     }
 
+    // Append with default position type
+
     default @NotNull GlyphComponentBuilder append(int position, @NotNull AppendableGlyph glyph) {
         return append(PositionType.ABSOLUTE, position, glyph);
     }
-
-    // Append with default position type
-
+    
     default @NotNull GlyphComponentBuilder append(@NotNull AppendableGlyph glyph) {
         return append(PositionType.ABSOLUTE, glyph);
     }
