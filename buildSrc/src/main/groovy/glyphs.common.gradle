@@ -21,6 +21,6 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    api "team.unnamed:creative-api:0.3.0-SNAPSHOT"
+    api "team.unnamed:creative-api:0.4.1-SNAPSHOT"
     implementation "net.kyori:adventure-api:4.11.0"
 }

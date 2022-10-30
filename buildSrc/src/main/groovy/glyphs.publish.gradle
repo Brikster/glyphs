@@ -1,9 +1,18 @@
 plugins {
     id 'maven-publish'
+    id 'signing'
 }
 
 java {
     withSourcesJar()
+    withJavadocJar()
+}
+
+javadoc {
+    options.encoding = "UTF-8"
+    options.addStringOption('Xdoclint:none', '-quiet')
+    // Java 9 and higher
+    options.addBooleanOption('html5', true)
 }
 
 publishing {
@@ -11,6 +20,33 @@ publishing {
         maven(MavenPublication) {
             from components.java
             artifactId = "$mavenArtifactId"
+            pom {
+                name = "glyphs"
+                description = "Library for convenient management of bitmap textures from Minecraft resourcepacks."
+                url = "https://github.com/Brikster/glyphs"
+                licenses {
+                    license {
+                        name = "GPL-v3.0"
+                        url = "https://www.gnu.org/licenses/gpl-3.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'Brikster'
+                        name = 'Ilya Andreev'
+                        email = 'mrbrikster@yandex.ru'
+                    }
+                }
+                scm {
+                    url = 'https://github.com/Brikster/glyphs'
+                    connection = 'scm:git:git://github.com/Brikster/glyphs.git'
+                    developerConnection = 'scm:git:git@github.com:Brikster/glyphs.git'
+                }
+            }
         }
     }
+}
+
+signing {
+    sign publishing.publications.maven
 }
