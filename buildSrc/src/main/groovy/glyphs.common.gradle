@@ -24,7 +24,10 @@ tasks {
 
 repositories {
     mavenCentral()
-    maven { url "https://repo.unnamed.team/repository/unnamed-public/" }
+    maven {
+        name "ossrh-releases"
+        url "https://s01.oss.sonatype.org/service/local/repositories/releases/content/"
+    }
 }
 
 def lombokVersion = "1.18.24"
@@ -33,6 +36,6 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    api "team.unnamed:creative-api:0.4.1-SNAPSHOT"
+    api "ru.brikster:creative-api:0.4.1"
     implementation "net.kyori:adventure-api:4.11.0"
 }
