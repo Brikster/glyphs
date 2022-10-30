@@ -15,7 +15,8 @@ so **glyphs** is platform-independent.
 ### Decorated chat message
 ![Decorated chat message](markdown/example_message.png)
 
-At the left part of message you can see the texture with Minecraft® logo (all rights belong to their respective owners), that's just and example.
+At the left part of message you can see the texture with Minecraft® logo 
+(all rights belong to their respective owners, that's just an example).
 
 #### How to reproduce
 
@@ -24,7 +25,7 @@ var spaces = MojangSpacesGlyph.create();
 var exampleLogo = ImageGlyph.of(Texture.of(
             Key.key(Glyph.DEFAULT_NAMESPACE, "chat/example_logo"),
             GlyphResources.resourceFromJar("example_logo.png")),
-        new TextureProperties(50, 6));
+        new TextureProperties(/* height */ 50, /* ascent */ 56));
 
 Collection<FileResource> resources = GlyphCompiler.instance()
         .compile(spaces, exampleLogo);
@@ -33,7 +34,7 @@ Collection<FileResource> resources = GlyphCompiler.instance()
 createResourcepack(resources);
 
 // Indent component with 14 spaces
-Component logoIndentComponent = Component.text("              ");
+Component logoIndentComponent = Component.text(" ".repeat(14));
 
 // GlyphComponentBuilder#build returns "Component"'s instance from "adventure" library
 Component resultComponent = GlyphComponentBuilder.universal(spaces)
@@ -67,17 +68,17 @@ var spaces = MojangSpacesGlyph.create();
 var guiBackground = ImageGlyph.of(Texture.of(
             Key.key(Glyph.DEFAULT_NAMESPACE, "gui/gui_background"),
             GlyphResources.resourceFromJar("gui_background.png")),
-        new TextureProperties(256, 19));
+        new TextureProperties(/* height */ 256, /* ascent */ 19));
 
 var exampleButton = ImageGlyph.of(Texture.of(
             Key.key(Glyph.DEFAULT_NAMESPACE, "gui/example_button"),
             GlyphResources.resourceFromJar("example_button.png")),
-        new TextureProperties(22, -56));
+        new TextureProperties(/* height */ 22, /* ascent */ -56));
 
 var font = GlyphResources.minecraftFontGlyphCollection(
-        List.of(new TextureProperties(12, -6),
-            new TextureProperties(8, -24),
-            new TextureProperties(8, -36)));
+        List.of(new TextureProperties(/* height */ 12, /* ascent */ -6),
+            new TextureProperties(/* height */ 8, /* ascent */ -24),
+            new TextureProperties(/* height */ 8, /* ascent */ -36)));
 
 Collection<FileResource> resources = GlyphCompiler.instance()
         .compile(spaces, guiBackground, exampleButton, font);
@@ -89,11 +90,11 @@ createResourcepack(resources);
 // Building component for inventory title
 Component titleComponent = GlyphComponentBuilder.gui(spaces)
         .append(guiBackground)
-        .append(131, exampleButton)
-        .append(16, font.translate(12, -6, "Example text"))
-        .append(16, font.translate(8, -24, "Hello "))
-        .append(PositionType.RELATIVE, font.translate(8, -24, "world..."))
-        .append(PositionType.ABSOLUTE, 16, font.translate(8, -36, "Hello world...", NamedTextColor.LIGHT_PURPLE))
+        .append(/* position */ 131, exampleButton)
+        .append(/* position */ 16, font.translate(/* height */ 12, /* ascent */ -6, "Example text"))
+        .append(/* position */ 16, font.translate(/* height */ 8, /* ascent */ -24, "Hello "))
+        .append(PositionType.RELATIVE, font.translate(/* height */ 8, /* ascent */ -24, "world..."))
+        .append(PositionType.ABSOLUTE, /* position */ 16, font.translate(/* height */ 8, /* ascent */ -36, "Hello world...", NamedTextColor.LIGHT_PURPLE))
         .build()
         .append(Component.text("Test menu with glyphs", NamedTextColor.DARK_GRAY, TextDecoration.UNDERLINED));
 
