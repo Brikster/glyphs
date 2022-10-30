@@ -6,11 +6,6 @@ jobs:
   build:
     if: "! contains(toJSON(github.event.commits.*.message), '[SKIP-CI]')"
     runs-on: ubuntu-latest
-    env:
-      SIGNING_SECRET_KEY: ${{ secrets.DEPLOY_GPG_PRIVATE_KEY }}
-      SIGNING_PASSWORD: ${{ secrets.DEPLOY_GPG_PRIVATE_KEY_PASSPHRASE }}
-      OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-      OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
@@ -19,3 +14,8 @@ jobs:
           distribution: 'corretto'
           cache: 'gradle'
       - run: gradle build publish --no-daemon
+        env:
+          SIGNING_SECRET_KEY: ${{ secrets.DEPLOY_GPG_PRIVATE_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.DEPLOY_GPG_PRIVATE_KEY_PASSPHRASE }}
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
