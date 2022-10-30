@@ -15,28 +15,26 @@ public class DefaultGlyphCompiler implements GlyphCompiler {
     public @NotNull Collection<@NotNull FileResource> compile(@NotNull Collection<@NotNull ResourceProducer> producers) {
         Set<FileResource> fileResources = new HashSet<>();
 
-        Set<Key> usedKeys = producers
+        Set<Key> fontKeys = producers
                 .stream()
                 .map(ResourceProducer::fontKey)
                 .collect(Collectors.toUnmodifiableSet());
 
-        for (Key key : usedKeys) {
+        fontKeys.forEach(key -> {
             List<FontProvider> fontProviders = new ArrayList<>();
-
             ArbitraryCharacterFactory characterFactory = new DefaultArbitraryCharacterFactory();
-
-            for (ResourceProducer producer : producers
-                    .stream()
+            producers.stream()
                     .filter(fontProviderProducer -> fontProviderProducer.fontKey().equals(key))
-                    .toList()) {
-                producer.produceResources(characterFactory);
-                fontProviders.addAll(producer.fontProviders());
-
-                fileResources.addAll(producer.textures());
-            }
-
+                    .toList()
+                    .forEach(producer -> {
+                        producer.produceResources(characterFactory);
+                        // Add font providers for current font key
+                        fontProviders.addAll(producer.fontProviders());
+                        // Add textures to common set with resources
+                        fileResources.addAll(producer.textures());
+                    });
             fileResources.add(Font.of(key, fontProviders));
-        }
+        });
 
         return fileResources;
     }
