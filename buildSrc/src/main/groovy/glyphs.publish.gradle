@@ -3,18 +3,6 @@ plugins {
     id 'signing'
 }
 
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
-
-javadoc {
-    options.encoding = "UTF-8"
-    options.addStringOption('Xdoclint:none', '-quiet')
-    // Java 9 and higher
-    options.addBooleanOption('html5', true)
-}
-
 publishing {
     repositories {
         maven {
@@ -24,28 +12,26 @@ publishing {
                 url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
             }
             credentials {
-                username = rootProject.hasProperty("ossrhUsername")
-                        ? findProperty("ossrhUsername")
-                        : System.getenv("OSSRH_USERNAME")
-                password = rootProject.hasProperty("ossrhPassword")
-                        ? findProperty("ossrhPassword")
-                        : System.getenv("OSSRH_PASSWORD")
+                username = rootProject.hasProperty("ossrhUsername") ? findProperty("ossrhUsername") : System.getenv("OSSRH_USERNAME")
+                password = rootProject.hasProperty("ossrhPassword") ? findProperty("ossrhPassword") : System.getenv("OSSRH_PASSWORD")
             }
         }
     }
 
     publications {
         maven(MavenPublication) {
-            from components.java
-            artifactId = "$mavenArtifactId"
+            if (findProperty("mavenArtifactId") != "glyphs-parent") {
+                from components.java
+            }
+            artifactId = findProperty("mavenArtifactId")
             pom {
                 name = "glyphs"
                 description = "Library for convenient management of bitmap textures from Minecraft resourcepacks."
                 url = "https://github.com/Brikster/glyphs"
                 licenses {
                     license {
-                        name = "GPL-v3.0"
-                        url = "https://www.gnu.org/licenses/gpl-3.0.txt"
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
                     }
                 }
                 developers {

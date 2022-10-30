@@ -1,3 +1,7 @@
+plugins {
+    id "glyphs.publish"
+}
+
 allprojects {
     group = "ru.brikster"
     version = "$version"
