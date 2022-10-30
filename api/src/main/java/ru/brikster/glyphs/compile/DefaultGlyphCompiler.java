@@ -8,6 +8,7 @@ import team.unnamed.creative.font.FontProvider;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DefaultGlyphCompiler implements GlyphCompiler {
 
@@ -20,23 +21,27 @@ public class DefaultGlyphCompiler implements GlyphCompiler {
                 .map(ResourceProducer::fontKey)
                 .collect(Collectors.toUnmodifiableSet());
 
-        fontKeys.forEach(key -> {
+        for (Key key : fontKeys) {
             List<FontProvider> fontProviders = new ArrayList<>();
             ArbitraryCharacterFactory characterFactory = new DefaultArbitraryCharacterFactory();
-            producers.stream()
-                    .filter(fontProviderProducer -> fontProviderProducer.fontKey().equals(key))
-                    .toList()
-                    .forEach(producer -> {
-                        producer.produceResources(characterFactory);
-                        // Add font providers for current font key
-                        fontProviders.addAll(producer.fontProviders());
-                        // Add textures to common set with resources
-                        fileResources.addAll(producer.textures());
-                    });
+            for (ResourceProducer producer : producers) {
+                if (producer.fontKey().equals(key)) {
+                    producer.produceResources(characterFactory);
+                    // Add font providers for current font key
+                    fontProviders.addAll(producer.fontProviders());
+                    // Add textures to common set with resources
+                    fileResources.addAll(producer.textures());
+                }
+            }
             fileResources.add(Font.of(key, fontProviders));
-        });
+        }
 
         return fileResources;
     }
+
+    <T> Iterable<T> toIterable(final Stream<T> stream) {
+        return stream::iterator;
+    }
+
 
 }
