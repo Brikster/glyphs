@@ -107,19 +107,17 @@ See [full code](https://github.com/Brikster/glyphs/blob/master/example-bukkit/sr
 You need an implementation of Minecraft server with [adventure](https://github.com/KyoriPowered/adventure) library support.
 Also, that's required Minecraft 1.19 and higher to support all the library features.
 
-### Build
-Use Gradle to build library and publish it to Maven repository.
-For example, you can publish it to Maven local repository:
-```shell
-gradle build publishToMavenLocal
-```
-
 ### Add dependency
+
+**glyphs** is published to Maven Central repository.
 
 #### Gradle
 ```groovy
 repositories {
-    mavenLocal()
+    maven {
+        name "maven-central-snapshots"
+        url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+    }
 }
 
 dependencies {

@@ -16,6 +16,20 @@ javadoc {
 }
 
 publishing {
+    repositories {
+        maven {
+            if (version.toString().endsWith("-SNAPSHOT")) {
+                url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            } else {
+                url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            }
+            credentials {
+                username = "$ossrhUsername"
+                password = "$ossrhPassword"
+            }
+        }
+    }
+
     publications {
         maven(MavenPublication) {
             from components.java
