@@ -149,7 +149,7 @@ public final class ExamplePlugin extends JavaPlugin implements Listener {
         gui.setOnGlobalClick(event -> event.setCancelled(true));
         gui.setOnOutsideClick(event -> event.setCancelled(true));
 
-        Component logoIndentComponent = Component.text("              ");
+        Component logoIndentComponent = Component.text(" ".repeat(14));
 
         this.chatComponent = GlyphComponentBuilder.universal(spaces)
                 .append(exampleLogo)
