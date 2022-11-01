@@ -127,12 +127,12 @@ public final class ExamplePlugin extends JavaPlugin implements Listener {
         StaticPane pane = new StaticPane(0, 0, 9, 4);
 
         ItemStack itemStack = new ItemStack(Material.PAPER);
-        var meta = itemStack.getItemMeta();
-        meta.setCustomModelData(1);
-        meta.displayName(Component.text("Example button")
-                .color(NamedTextColor.YELLOW)
-                .decoration(TextDecoration.ITALIC, false));
-        itemStack.setItemMeta(meta);
+        itemStack.editMeta(meta -> {
+            meta.setCustomModelData(1);
+            meta.displayName(Component.text("Example button")
+                    .color(NamedTextColor.YELLOW)
+                    .decoration(TextDecoration.ITALIC, false));
+        });
 
         GuiItem item = new GuiItem(itemStack);
         item.setAction(event -> {
