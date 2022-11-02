@@ -27,6 +27,11 @@ public class DefaultSpacesGlyphResourceProducer extends AbstractSpacesGlyphResou
     }
 
     @Override
+    public boolean produced() {
+        return textures != null;
+    }
+
+    @Override
     public void produceResources(ArbitraryCharacterFactory characterFactory) {
         if (textures != null) {
             throw new ResourceAlreadyProducedException();

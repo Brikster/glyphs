@@ -22,6 +22,11 @@ public class MojangSpacesGlyphResourceProducer extends AbstractSpacesGlyphResour
     }
 
     @Override
+    public boolean produced() {
+        return fontProviders != null;
+    }
+
+    @Override
     public void produceResources(ArbitraryCharacterFactory characterFactory) {
         if (fontProviders != null) {
             throw new ResourceAlreadyProducedException();

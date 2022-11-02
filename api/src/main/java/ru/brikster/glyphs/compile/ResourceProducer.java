@@ -14,6 +14,8 @@ public interface ResourceProducer {
 
     @NotNull Key fontKey();
 
+    boolean produced();
+
     void produceResources(ArbitraryCharacterFactory characterFactory) throws ResourceAlreadyProducedException;
 
     @NotNull Collection<@NotNull FontProvider> fontProviders() throws ResourceNotProducedException;

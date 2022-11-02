@@ -26,6 +26,11 @@ public abstract class AbstractSpacesGlyphResourceProducer implements SpacesGlyph
     }
 
     @Override
+    public boolean produced() {
+        return mapping != null;
+    }
+
+    @Override
     public Glyph translate(int length) throws ResourceNotProducedException {
         if (mapping == null) {
             throw new ResourceNotProducedException();

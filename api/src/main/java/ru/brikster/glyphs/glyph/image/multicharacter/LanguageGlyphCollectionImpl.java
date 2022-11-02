@@ -44,6 +44,11 @@ public class LanguageGlyphCollectionImpl implements LanguageGlyphCollection {
     }
 
     @Override
+    public boolean produced() {
+        return fontProviders != null;
+    }
+
+    @Override
     public void produceResources(ArbitraryCharacterFactory characterFactory) throws ResourceAlreadyProducedException {
         if (fontProviders != null) {
             throw new ResourceAlreadyProducedException();
