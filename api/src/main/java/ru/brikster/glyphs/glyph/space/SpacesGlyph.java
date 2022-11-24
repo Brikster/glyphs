@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class SpacesGlyph implements Glyph {
 
     private static final Key DEFAULT_SPACE_TEXTURE_KEY = Key.key(Glyph.DEFAULT_NAMESPACE, "space");
-    public static @NotNull DefaultSpaceGlyph DEFAULT_SPACE_GLYPH = new DefaultSpaceGlyph();
+    public static final @NotNull DefaultSpaceGlyph DEFAULT_SPACE_GLYPH = new DefaultSpaceGlyph();
     private final Key key;
     private final char[] characters;
     private final int length;
