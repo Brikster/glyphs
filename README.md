@@ -112,7 +112,7 @@ Also, that's required Minecraft 1.19 and higher to support all the library featu
 
 **glyphs** is published to Maven Central repository.
 
-#### Gradle
+#### Gradle (releases)
 ```groovy
 repositories {
     mavenCentral()
@@ -125,6 +125,25 @@ dependencies {
     implementation "ru.brikster:glyphs-resources:$version"
 }
 ```
+
+#### Gradle (snapshots)
+```groovy
+repositories {
+    maven { 
+        id "ossrh-snapshots"
+        url "https://s01.oss.sonatype.org/content/repositories/snapshots/" 
+    }
+}
+
+dependencies {
+    // Main dependency with GlyphComponentBuilder and GlyphCompiler
+    implementation "ru.brikster:glyphs-api:$version"
+    // Optional dependency with some frequently used resources (Minecraft font etc.)
+    implementation "ru.brikster:glyphs-resources:$version"
+}
+```
+
+You can check out for latest snapshot versions in [gradle.properties](gradle.properties) or at [OSSRH Snapshots](https://s01.oss.sonatype.org/content/repositories/snapshots/ru/brikster/glyphs-api/).
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/Brikster/glyphs?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/Brikster/glyphs?style=social)
