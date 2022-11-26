@@ -31,6 +31,9 @@ public final class GlyphResources {
     public static final Writable BACKGROUND_WRITABLE = resourceFromJar(GLYPHS_RESOURCES_FOLDER + '/' + "fullscreen_background.png");
     private static final Key PAPER_ITEM_KEY = Key.key("item/paper");
 
+    private static final Key MINECRAFT_FONT_KEY = Key.key(Glyph.DEFAULT_NAMESPACE, "minecraft_font");
+    private static final Key FULLSCREEN_BACKGROUND_KEY = Key.key(Glyph.DEFAULT_NAMESPACE, "fullscreen_background");
+
     public static @NotNull Writable resourceFromJar(@NotNull String fileName) {
         return Writable.inputStream(() -> {
             try {
@@ -70,9 +73,7 @@ public final class GlyphResources {
     }
 
     public static @NotNull LanguageGlyphCollection minecraftFontGlyphCollection(@NotNull List<@NotNull TextureProperties> propertiesList) {
-        return minecraftFontGlyphCollection(Glyph.DEFAULT_FONT_KEY,
-                Key.key(Glyph.DEFAULT_NAMESPACE, "minecraft_font"),
-                propertiesList);
+        return minecraftFontGlyphCollection(MINECRAFT_FONT_KEY, MINECRAFT_FONT_KEY, propertiesList);
     }
 
     public static @NotNull Collection<@NotNull FileResource> blankSlotResources(@NotNull Key modelKey, @NotNull Key itemKey, int customModelData) {
@@ -109,8 +110,7 @@ public final class GlyphResources {
     }
 
     public static @NotNull ImageGlyph fullscreenBackgroundGlyph() {
-        return fullscreenBackgroundGlyph(Glyph.DEFAULT_FONT_KEY,
-                Key.key(Glyph.DEFAULT_NAMESPACE, "fullscreen_background"));
+        return fullscreenBackgroundGlyph(FULLSCREEN_BACKGROUND_KEY, FULLSCREEN_BACKGROUND_KEY);
     }
 
 }

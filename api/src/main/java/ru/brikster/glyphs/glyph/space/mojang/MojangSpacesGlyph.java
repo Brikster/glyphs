@@ -13,7 +13,7 @@ public interface MojangSpacesGlyph extends Glyph, ResourceProducer {
     }
 
     static SpacesGlyphResourceProducer create() {
-        return create(Glyph.DEFAULT_FONT_KEY);
+        return create(Glyph.DEFAULT_SPACES_FONT_KEY);
     }
 
 }

@@ -23,6 +23,7 @@ public interface MulticharacterImageGlyphCollection extends ResourceProducer {
         return new MulticharacterImageGlyphCollectionImpl(fontKey, texture, properties, charactersMapping);
     }
 
+    @Deprecated(forRemoval = true)
     static @NotNull MulticharacterImageGlyphCollection of(@NotNull Texture texture,
                                                           @NotNull TextureProperties properties,
                                                           @NotNull List<@NotNull String> charactersMapping) {

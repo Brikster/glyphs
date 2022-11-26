@@ -25,7 +25,7 @@ public class SpacesGlyph implements Glyph {
     }
 
     public static SpacesGlyphResourceProducer create(@NotNull Writable spacesWritable) {
-        return create(Glyph.DEFAULT_FONT_KEY, DEFAULT_SPACE_TEXTURE_KEY, spacesWritable);
+        return create(Glyph.DEFAULT_SPACES_FONT_KEY, DEFAULT_SPACE_TEXTURE_KEY, spacesWritable);
     }
 
     @Override

@@ -9,7 +9,10 @@ public interface Glyph {
 
     String DEFAULT_NAMESPACE = "glyphs";
 
+    @Deprecated(forRemoval = true)
     Key DEFAULT_FONT_KEY = Key.key(DEFAULT_NAMESPACE, "default");
+
+    Key DEFAULT_SPACES_FONT_KEY = Key.key(DEFAULT_NAMESPACE, "spaces");
 
     int SEPARATOR_WIDTH = 1;
 

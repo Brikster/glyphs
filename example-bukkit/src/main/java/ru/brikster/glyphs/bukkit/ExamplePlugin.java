@@ -23,39 +23,36 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import ru.brikster.glyphs.compile.GlyphCompiler;
 import ru.brikster.glyphs.glyph.Glyph;
 import ru.brikster.glyphs.glyph.GlyphComponentBuilder;
 import ru.brikster.glyphs.glyph.GlyphComponentBuilder.PositionType;
 import ru.brikster.glyphs.glyph.image.ImageGlyph;
 import ru.brikster.glyphs.glyph.image.TextureProperties;
-import ru.brikster.glyphs.glyph.space.mojang.MojangSpacesGlyph;
+import ru.brikster.glyphs.pack.GlyphResourcePack;
+import ru.brikster.glyphs.pack.ResourceIdentifier;
 import ru.brikster.glyphs.resources.GlyphResources;
-import team.unnamed.creative.file.FileResource;
 import team.unnamed.creative.file.FileTree;
 import team.unnamed.creative.metadata.Metadata;
 import team.unnamed.creative.metadata.PackMeta;
 import team.unnamed.creative.texture.Texture;
 
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipOutputStream;
 
 public final class ExamplePlugin extends JavaPlugin implements Listener {
 
-    private static final GlyphCompiler COMPILER = GlyphCompiler.instance();
-
     private ChestGui gui;
     private Component chatComponent;
 
     @SneakyThrows
-    private void createResourcepack(Collection<FileResource> resources) {
+    private void createResourcepack(GlyphResourcePack pack) {
         File file = new File(getDataFolder(), "pack.zip");
         getDataFolder().mkdirs();
         file.createNewFile();
@@ -63,8 +60,7 @@ public final class ExamplePlugin extends JavaPlugin implements Listener {
             tree.write(Metadata.builder()
                     .add(PackMeta.of(9, "Example resourcepack"))
                     .build());
-
-            resources.forEach(tree::write);
+            pack.writeAll(tree);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -87,35 +83,38 @@ public final class ExamplePlugin extends JavaPlugin implements Listener {
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
 
-        var spaces = MojangSpacesGlyph.create();
+        GlyphResourcePack pack = GlyphResourcePack.create()
+                .with(ImageId.GUI_BACKGROUND, ImageGlyph.of(
+                        Key.key("glyphs", "example_gui"),
+                        Texture.of(
+                                Key.key(Glyph.DEFAULT_NAMESPACE, "gui/gui_background"),
+                                GlyphResources.resourceFromJar("gui_background.png")),
+                        new TextureProperties(256, 19)))
+                .with(ImageId.EXAMPLE_BUTTON, ImageGlyph.of(
+                        Key.key("glyphs", "example_gui"),
+                        Texture.of(
+                                Key.key(Glyph.DEFAULT_NAMESPACE, "gui/example_button"),
+                                GlyphResources.resourceFromJar("example_button.png")),
+                        new TextureProperties(22, -56)))
+                .with(ImageId.EXAMPLE_LOGO, ImageGlyph.of(
+                        Key.key("glyphs", "example_chat_message"),
+                        Texture.of(
+                                Key.key(Glyph.DEFAULT_NAMESPACE, "chat/example_logo"),
+                                GlyphResources.resourceFromJar("example_logo.png")),
+                        new TextureProperties(50, 6)))
+                .with(ResourceIdentifier.MINECRAFT_FONT, GlyphResources.minecraftFontGlyphCollection(
+                        List.of(new TextureProperties(12, -6),
+                                new TextureProperties(8, -24),
+                                new TextureProperties(8, -36))))
+                .withMojangSpaces()
+                .with(GlyphResources.blankSlotResources());
 
-        var guiBackground = ImageGlyph.of(Texture.of(
-                        Key.key(Glyph.DEFAULT_NAMESPACE, "gui/gui_background"),
-                        GlyphResources.resourceFromJar("gui_background.png")),
-                new TextureProperties(256, 19));
+        createResourcepack(pack);
 
-        var exampleButton = ImageGlyph.of(Texture.of(
-                        Key.key(Glyph.DEFAULT_NAMESPACE, "gui/example_button"),
-                        GlyphResources.resourceFromJar("example_button.png")),
-                new TextureProperties(22, -56));
-
-        var font = GlyphResources.minecraftFontGlyphCollection(
-                List.of(new TextureProperties(12, -6),
-                        new TextureProperties(8, -24),
-                        new TextureProperties(8, -36)));
-
-        var exampleLogo = ImageGlyph.of(Texture.of(
-                        Key.key(Glyph.DEFAULT_NAMESPACE, "chat/example_logo"),
-                        GlyphResources.resourceFromJar("example_logo.png")),
-                new TextureProperties(50, 6));
-
-        var resources = COMPILER.compile(spaces, guiBackground, exampleButton, font, exampleLogo);
-        resources.addAll(GlyphResources.blankSlotResources());
-        createResourcepack(resources);
-
-        var titleComponent = GlyphComponentBuilder.gui(spaces)
-                .append(guiBackground)
-                .append(131, exampleButton)
+        var font = pack.get(ResourceIdentifier.MINECRAFT_FONT);
+        var titleComponent = GlyphComponentBuilder.gui(pack.spaces())
+                .append(pack.get(ImageId.GUI_BACKGROUND))
+                .append(131, pack.get(ImageId.EXAMPLE_BUTTON))
                 .append(16, font.translate(12, -6, "Example text"))
                 .append(16, font.translate(8, -24, "Hello "))
                 .append(PositionType.RELATIVE, font.translate(8, -24, "world..."))
@@ -151,8 +150,8 @@ public final class ExamplePlugin extends JavaPlugin implements Listener {
 
         Component logoIndentComponent = Component.text(" ".repeat(14));
 
-        this.chatComponent = GlyphComponentBuilder.universal(spaces)
-                .append(exampleLogo)
+        this.chatComponent = GlyphComponentBuilder.universal(pack.spaces())
+                .append(pack.get(ImageId.EXAMPLE_LOGO))
                 .build()
                 .append(Component.newline().append(logoIndentComponent))
                 .append(Component.newline()
@@ -171,6 +170,27 @@ public final class ExamplePlugin extends JavaPlugin implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         event.getPlayer().sendMessage(chatComponent);
+    }
+
+    @RequiredArgsConstructor
+    public enum ImageId implements ResourceIdentifier<@NotNull ImageGlyph> {
+        // GUI
+        GUI_BACKGROUND("gui_background"),
+        EXAMPLE_BUTTON("example_button"),
+        // CHAT
+        EXAMPLE_LOGO("example_logo");
+
+        private final @NotNull String key;
+
+        @Override
+        public @NotNull String key() {
+            return key;
+        }
+
+        @Override
+        public @NotNull Class<ImageGlyph> getType() {
+            return ImageGlyph.class;
+        }
     }
 
 }

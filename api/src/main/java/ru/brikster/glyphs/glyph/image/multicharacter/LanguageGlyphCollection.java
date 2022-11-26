@@ -21,6 +21,7 @@ public interface LanguageGlyphCollection extends ResourceProducer {
         return new LanguageGlyphCollectionImpl(fontKey, texture, propertiesList, charactersMapping);
     }
 
+    @Deprecated(forRemoval = true)
     static @NotNull LanguageGlyphCollection of(@NotNull Texture texture,
                                                @NotNull List<@NotNull TextureProperties> propertiesList,
                                                @NotNull List<@NotNull String> charactersMapping) {

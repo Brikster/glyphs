@@ -17,6 +17,7 @@ public interface ImageGlyph extends AppendableGlyph, ResourceProducer {
         return new ImageGlyphImpl(key, texture, properties);
     }
 
+    @Deprecated(forRemoval = true)
     static @NotNull ImageGlyph of(@NotNull Texture texture,
                                   @NotNull TextureProperties properties) {
         return of(Glyph.DEFAULT_FONT_KEY, texture, properties);
