@@ -130,7 +130,7 @@ dependencies {
 ```groovy
 repositories {
     maven { 
-        id "ossrh-snapshots"
+        name "ossrh-snapshots"
         url "https://s01.oss.sonatype.org/content/repositories/snapshots/" 
     }
 }
