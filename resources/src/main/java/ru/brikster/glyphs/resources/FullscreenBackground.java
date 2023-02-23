@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 @UtilityClass
-public class FullscreenBackground {
+public final class FullscreenBackground {
 
     private static final ScheduledExecutorService EXECUTOR_SERVICE = Executors.newSingleThreadScheduledExecutor();
 

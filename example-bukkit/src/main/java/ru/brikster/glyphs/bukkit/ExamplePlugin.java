@@ -29,6 +29,7 @@ import ru.brikster.glyphs.glyph.GlyphComponentBuilder.PositionType;
 import ru.brikster.glyphs.glyph.image.ImageGlyph;
 import ru.brikster.glyphs.glyph.image.TextureProperties;
 import ru.brikster.glyphs.pack.GlyphResourcePack;
+import ru.brikster.glyphs.pack.ImageResourceIdentifier;
 import ru.brikster.glyphs.pack.ResourceIdentifier;
 import ru.brikster.glyphs.resources.GlyphResources;
 import team.unnamed.creative.file.FileTree;
@@ -173,23 +174,18 @@ public final class ExamplePlugin extends JavaPlugin implements Listener {
     }
 
     @RequiredArgsConstructor
-    public enum ImageId implements ResourceIdentifier<@NotNull ImageGlyph> {
-        // GUI
-        GUI_BACKGROUND("gui_background"),
-        EXAMPLE_BUTTON("example_button"),
+    public enum ImageId implements ImageResourceIdentifier {
         // CHAT
-        EXAMPLE_LOGO("example_logo");
+        EXAMPLE_BUTTON("example_button"),
+        EXAMPLE_LOGO("example_logo"),
+        // GUI
+        GUI_BACKGROUND("gui_background");
 
         private final @NotNull String key;
 
         @Override
         public @NotNull String key() {
             return key;
-        }
-
-        @Override
-        public @NotNull Class<ImageGlyph> getType() {
-            return ImageGlyph.class;
         }
     }
 

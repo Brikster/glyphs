@@ -1,6 +1,5 @@
 package ru.brikster.glyphs.pack;
 
-import net.kyori.adventure.key.Keyed;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.compile.ResourceProducer;
 import ru.brikster.glyphs.glyph.image.multicharacter.LanguageGlyphCollection;

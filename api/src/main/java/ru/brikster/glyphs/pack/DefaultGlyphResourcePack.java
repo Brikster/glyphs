@@ -5,8 +5,12 @@ import ru.brikster.glyphs.compile.GlyphCompiler;
 import ru.brikster.glyphs.compile.ResourceProducer;
 import team.unnamed.creative.file.FileResource;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DefaultGlyphResourcePack implements GlyphResourcePack {
 
     private final Map<String, ResourceProducer> raw = new HashMap<>();
