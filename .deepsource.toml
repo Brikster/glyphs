@@ -4,5 +4,5 @@ version = 1
 name = "java"
 enabled = true
 
-  [analyzers.meta]
-  runtime_version = "17"
+[analyzers.meta]
+runtime_version = "17"
