@@ -1,5 +1,6 @@
 name: example-glyphs-plugin
 main: ru.brikster.glyphs.bukkit.ExamplePlugin
+version: '${version}'
 api-version: "1.19"
 author: Brikster
 commands:
