@@ -76,7 +76,7 @@ public class LanguageGlyphCollectionImpl implements LanguageGlyphCollection {
     public @NotNull AppendableGlyph translate(int height, int ascent, @NotNull Character character, @Nullable TextColor color) throws IllegalArgumentException {
         TextureProperties properties = new TextureProperties(height, ascent);
         if (!propertiesToMulticharacterMap.containsKey(properties)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Font with " + properties + " not found");
         }
         return propertiesToMulticharacterMap.get(properties).translate(character, color);
     }
@@ -85,7 +85,7 @@ public class LanguageGlyphCollectionImpl implements LanguageGlyphCollection {
     public @NotNull List<@NotNull AppendableGlyph> translate(int height, int ascent, @NotNull String text, @Nullable TextColor color) throws IllegalArgumentException {
         TextureProperties properties = new TextureProperties(height, ascent);
         if (!propertiesToMulticharacterMap.containsKey(properties)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Font with " + properties + " not found");
         }
         return propertiesToMulticharacterMap.get(properties).translate(text, color);
     }

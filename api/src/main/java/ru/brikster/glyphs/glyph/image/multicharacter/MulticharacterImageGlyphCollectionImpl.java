@@ -87,7 +87,7 @@ public class MulticharacterImageGlyphCollectionImpl implements MulticharacterIma
     @Override
     public @NotNull PreparedImageGlyph translate(@NotNull Character character, @Nullable TextColor color) throws IllegalArgumentException {
         if (!originToArbitraryCharacterMap.containsKey(character)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Illegal character: " + character);
         }
 
         int width = 0;
@@ -100,7 +100,7 @@ public class MulticharacterImageGlyphCollectionImpl implements MulticharacterIma
                     }
 
                     if (image == null) {
-                        throw new IllegalArgumentException();
+                        throw new IllegalArgumentException("Image " + texture.key() + " not found");
                     }
 
                     int filePartWidth = image.getWidth() / charactersMapping.get(0).length();
