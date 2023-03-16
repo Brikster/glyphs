@@ -32,6 +32,7 @@ public interface LanguageGlyphCollection extends ResourceProducer {
     @NotNull AppendableGlyph translate(int height, int ascent, @NotNull Character character, @Nullable TextColor color) throws IllegalArgumentException;
 
     @NotNull List<@NotNull AppendableGlyph> translate(int height, int ascent, @NotNull String text, @Nullable TextColor color) throws IllegalArgumentException;
+
     @NotNull List<@NotNull AppendableGlyph> translate(int height, int ascent, @NotNull Component component) throws IllegalArgumentException;
 
     default @NotNull AppendableGlyph translate(int height, int ascent, @NotNull Character character) throws IllegalArgumentException {

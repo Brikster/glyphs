@@ -10,8 +10,8 @@ import ru.brikster.glyphs.glyph.AppendableGlyph;
 import ru.brikster.glyphs.glyph.exception.ResourceAlreadyProducedException;
 import ru.brikster.glyphs.glyph.exception.ResourceNotProducedException;
 import ru.brikster.glyphs.glyph.image.TextureProperties;
-import ru.brikster.glyphs.util.kyori.KyoriUtils;
-import ru.brikster.glyphs.util.kyori.TextAndColor;
+import ru.brikster.glyphs.util.kyori.KyoriUtil;
+import ru.brikster.glyphs.util.kyori.KyoriUtil.ColoredPartsFlattenerListener.ColoredComponentTextPart;
 import team.unnamed.creative.font.FontProvider;
 import team.unnamed.creative.texture.Texture;
 
@@ -39,7 +39,6 @@ public class LanguageGlyphCollectionImpl implements LanguageGlyphCollection {
             propertiesToMulticharacterMap.put(properties, MulticharacterImageGlyphCollection.of(fontKey, texture, properties, charactersMapping));
         }
     }
-
 
     @Override
     public @NotNull Key fontKey() {
@@ -101,14 +100,12 @@ public class LanguageGlyphCollectionImpl implements LanguageGlyphCollection {
     public @NotNull List<@NotNull AppendableGlyph> translate(int height, int ascent, @NotNull Component component) throws IllegalArgumentException {
         MulticharacterImageGlyphCollection glyphCollection = getGlyphCollection(height, ascent);
         List<AppendableGlyph> result = new ArrayList<>();
-        List<TextAndColor> textAndColors = KyoriUtils.groupByColor(component);
+        List<? extends ColoredComponentTextPart> textAndColors = KyoriUtil.toColoredParts(component);
 
-        for (TextAndColor textAndColor : textAndColors) {
-            List<AppendableGlyph> glyphList = glyphCollection.translate(textAndColor.text(), textAndColor.color());
-
+        for (ColoredComponentTextPart parts : textAndColors) {
+            List<AppendableGlyph> glyphList = glyphCollection.translate(parts.text(), parts.color());
             result.addAll(glyphList);
         }
-
         return result;
     }
 
