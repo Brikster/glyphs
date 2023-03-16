@@ -37,7 +37,7 @@ public class DefaultGlyphResourcePack implements GlyphResourcePack {
     @Override
     public @NotNull <T extends ResourceProducer> GlyphResourcePack with(@NotNull ResourceIdentifier<@NotNull T> id, @NotNull T producer) {
         if (raw.containsKey(id.key()) || compiled.containsKey(id.key())) {
-            throw new IllegalArgumentException("Producer with this identifier already registered");
+            throw new IllegalArgumentException("Producer with " + id.key() + " identifier already registered");
         }
         raw.put(id.key(), producer);
         return this;
@@ -52,7 +52,7 @@ public class DefaultGlyphResourcePack implements GlyphResourcePack {
     @Override
     public <T extends ResourceProducer> @NotNull T get(@NotNull ResourceIdentifier<@NotNull T> id) throws IllegalArgumentException {
         if (!compiled.containsKey(id.key())) {
-            throw new IllegalArgumentException("Producer with that identifier is not compiled");
+            throw new IllegalArgumentException("Producer with " + id.key() + " identifier is not compiled");
         }
         ResourceProducer producer = compiled.get(id.key());
         if (!id.getType().isAssignableFrom(producer.getClass())) {
