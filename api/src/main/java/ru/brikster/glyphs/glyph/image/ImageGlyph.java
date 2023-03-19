@@ -2,6 +2,7 @@ package ru.brikster.glyphs.glyph.image;
 
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.compile.ResourceProducer;
 import ru.brikster.glyphs.glyph.AppendableGlyph;
@@ -26,6 +27,10 @@ public interface ImageGlyph extends AppendableGlyph, ResourceProducer {
     @NotNull Character character() throws ResourceNotProducedException;
 
     @NotNull Texture texture();
+
+    default ColoredImageGlyph withColor(TextColor color) {
+        return new ColoredImageGlyphImpl(this, color);
+    }
 
     default @NotNull Component toAdventure() throws ResourceNotProducedException {
         return Component.text(character()).font(fontKey());
