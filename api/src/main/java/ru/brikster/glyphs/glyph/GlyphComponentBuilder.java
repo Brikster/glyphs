@@ -17,6 +17,10 @@ public interface GlyphComponentBuilder {
         return new GlyphComponentBuilderImpl(spacesProducer, -8, Component.text("", NamedTextColor.WHITE));
     }
 
+    static @NotNull GlyphComponentBuilder custom(SpacesGlyphResourceProducer spacesProducer, int position, Component baseComponent) {
+        return new GlyphComponentBuilderImpl(spacesProducer, position, baseComponent);
+    }
+
     @NotNull GlyphComponentBuilder append(PositionType positionType, int position, @NotNull AppendableGlyph glyph);
 
     default @NotNull GlyphComponentBuilder append(PositionType positionType, @NotNull AppendableGlyph glyph) {
