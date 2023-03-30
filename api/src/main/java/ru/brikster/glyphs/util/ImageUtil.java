@@ -13,7 +13,7 @@ public class ImageUtil {
         for (width = xTo - 1; width > xFrom; width--) {
             for (int height = yFrom; height < yTo; height++) {
                 if (new Color(image.getRGB(width, height), true)
-                        .getAlpha() == 255) {
+                        .getAlpha() != 0) {
                     return width - xFrom + 1;
                 }
             }
