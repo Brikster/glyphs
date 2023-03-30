@@ -93,7 +93,7 @@ public class LanguageGlyphCollectionImpl implements LanguageGlyphCollection {
     @Override
     public @NotNull List<@NotNull AppendableGlyph> translate(int height, int ascent, @NotNull String text, @Nullable TextColor color) throws IllegalArgumentException {
         MulticharacterImageGlyphCollection glyphCollection = getGlyphCollection(height, ascent);
-        return glyphCollection.translate(text, color);
+        return Collections.unmodifiableList(glyphCollection.translate(text, color));
     }
 
     @Override
@@ -106,7 +106,8 @@ public class LanguageGlyphCollectionImpl implements LanguageGlyphCollection {
             List<AppendableGlyph> glyphList = glyphCollection.translate(parts.text(), parts.color());
             result.addAll(glyphList);
         }
-        return result;
+
+        return Collections.unmodifiableList(result);
     }
 
 }

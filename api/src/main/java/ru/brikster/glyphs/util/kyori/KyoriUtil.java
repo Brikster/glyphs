@@ -11,10 +11,7 @@ import ru.brikster.glyphs.util.kyori.KyoriUtil.ColoredPartsFlattenerListener.Col
 
 import lombok.experimental.UtilityClass;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 @UtilityClass
 public class KyoriUtil {
@@ -27,7 +24,7 @@ public class KyoriUtil {
 
     public static class ColoredPartsFlattenerListener implements FlattenerListener {
 
-        private final Queue<TextColor> colors = new LinkedList<>();
+        private final Deque<TextColor> colors = new LinkedList<>();
         private final List<ColoredComponentTextPart> result = new ArrayList<>();
 
         @Override
@@ -47,12 +44,12 @@ public class KyoriUtil {
         public void popStyle(@NotNull Style style) {
             TextColor color = style.color();
             if (color != null) {
-                colors.remove();
+                colors.removeLast();
             }
         }
 
         private TextColor current() {
-            TextColor color = colors.peek();
+            TextColor color = colors.peekLast();
             return color != null ? color : NamedTextColor.WHITE;
         }
 
