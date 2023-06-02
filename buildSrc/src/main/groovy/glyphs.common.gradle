@@ -25,6 +25,10 @@ tasks {
 repositories {
     mavenCentral()
     maven {
+        name "unnamed-public"
+        url "https://repo.unnamed.team/repository/unnamed-public/"
+    }
+    maven {
         name "ossrh-releases"
         url "https://s01.oss.sonatype.org/service/local/repositories/releases/content/"
     }
@@ -32,10 +36,29 @@ repositories {
 
 def lombokVersion = "1.18.24"
 
+configurations {
+    shade { transitive = false }
+    compileOnly {
+        extendsFrom shade
+    }
+}
+
+jar {
+    from {
+        configurations.shade.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
 dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    api "ru.brikster:creative-api:0.4.1"
+    shade "team.unnamed:creative-api:0.7.2-SNAPSHOT"
+    shade "team.unnamed:creative-serializer-minecraft:0.7.2-SNAPSHOT"
     implementation "net.kyori:adventure-api:4.11.0"
+
+    // From creative lib
+    api 'org.jetbrains:annotations:23.0.0'
+    api 'com.google.code.gson:gson:2.8.0'
 }

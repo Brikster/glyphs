@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
-import team.unnamed.creative.file.FileResource;
+import ru.brikster.glyphs.compile.resource.FileResource;
 import team.unnamed.creative.font.Font;
 import team.unnamed.creative.font.FontProvider;
 
@@ -27,10 +27,10 @@ public class DefaultGlyphCompiler implements GlyphCompiler {
                     // Add font providers for current font key
                     fontProviders.addAll(producer.fontProviders());
                     // Add textures to common set with resources
-                    fileResources.addAll(producer.textures());
+                    fileResources.addAll(FileResource.fromTextures(producer.textures()));
                 }
             }
-            fileResources.add(Font.of(key, fontProviders));
+            fileResources.add(FileResource.fromFont(Font.of(key, fontProviders)));
         }
 
         return fileResources;

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.compile.GlyphCompiler;
 import ru.brikster.glyphs.compile.ResourceProducer;
-import team.unnamed.creative.file.FileResource;
+import ru.brikster.glyphs.compile.resource.FileResource;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DefaultGlyphResourcePack implements GlyphResourcePack {

@@ -5,20 +5,16 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
+import ru.brikster.glyphs.compile.resource.FileResource;
 import ru.brikster.glyphs.glyph.Glyph;
 import ru.brikster.glyphs.glyph.image.ImageGlyph;
 import ru.brikster.glyphs.glyph.image.TextureProperties;
 import ru.brikster.glyphs.glyph.image.multicharacter.LanguageGlyphCollection;
 import team.unnamed.creative.base.Writable;
-import team.unnamed.creative.file.FileResource;
-import team.unnamed.creative.model.ItemOverride;
-import team.unnamed.creative.model.ItemPredicate;
-import team.unnamed.creative.model.Model;
-import team.unnamed.creative.model.ModelTexture;
+import team.unnamed.creative.model.*;
 import team.unnamed.creative.texture.Texture;
 
 public final class GlyphResources {
@@ -84,20 +80,25 @@ public final class GlyphResources {
         Model blankSlotModel = Model.builder()
                 .key(modelKey)
                 .parent(Model.ITEM_GENERATED)
-                .textures(ModelTexture.builder().layers(modelKey).build())
+                .textures(ModelTextures.builder()
+                        .layers(ModelTexture.ofKey(modelKey))
+                        .build())
                 .build();
 
         Model paperItemModel = Model.builder()
                 .key(itemKey)
                 .parent(Model.ITEM_GENERATED)
-                .textures(ModelTexture.builder()
-                        .layers(Collections.singletonList(itemKey))
+                .textures(ModelTextures.builder()
+                        .layers(ModelTexture.ofKey(itemKey))
                         .build())
                 .overrides(ItemOverride.of(modelKey, ItemPredicate.customModelData(customModelData)))
                 .build();
 
         Texture texture = Texture.of(modelKey, BLANK_SLOT_IMAGE_WRITABLE);
-        return Arrays.asList(blankSlotModel, paperItemModel, texture);
+        return Arrays.asList(
+                FileResource.fromModel(blankSlotModel),
+                FileResource.fromModel(paperItemModel),
+                FileResource.fromTexture(texture));
     }
 
     public static @NotNull Collection<@NotNull FileResource> blankSlotResources() {

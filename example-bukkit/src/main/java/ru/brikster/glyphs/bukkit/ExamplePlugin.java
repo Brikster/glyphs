@@ -5,11 +5,8 @@ import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Objects;
-import java.util.zip.ZipOutputStream;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import net.kyori.adventure.key.Key;
@@ -40,9 +37,9 @@ import ru.brikster.glyphs.pack.GlyphResourcePack;
 import ru.brikster.glyphs.pack.ImageResourceIdentifier;
 import ru.brikster.glyphs.pack.ResourceIdentifier;
 import ru.brikster.glyphs.resources.GlyphResources;
-import team.unnamed.creative.file.FileTree;
-import team.unnamed.creative.metadata.Metadata;
-import team.unnamed.creative.metadata.PackMeta;
+import team.unnamed.creative.ResourcePack;
+import team.unnamed.creative.metadata.pack.PackMeta;
+import team.unnamed.creative.serialize.minecraft.MinecraftResourcePackWriter;
 import team.unnamed.creative.texture.Texture;
 
 public final class ExamplePlugin extends JavaPlugin implements Listener {
@@ -51,18 +48,18 @@ public final class ExamplePlugin extends JavaPlugin implements Listener {
     private Component chatComponent;
 
     @SneakyThrows
-    private void createResourcepack(GlyphResourcePack pack) {
+    private void createResourcepack(GlyphResourcePack glyphResourcePack) {
         File file = new File(getDataFolder(), "pack.zip");
         getDataFolder().mkdirs();
         file.createNewFile();
-        try (FileTree tree = FileTree.zip(new ZipOutputStream(new FileOutputStream(file)))) {
-            tree.write(Metadata.builder()
-                    .add(PackMeta.of(9, "Example resourcepack"))
-                    .build());
-            pack.writeAll(tree);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
+        ResourcePack resourcePack = ResourcePack.create();
+
+        resourcePack.packMeta(PackMeta.of(9, "Example resourcepack"));
+        glyphResourcePack.writeAll(resourcePack);
+
+        MinecraftResourcePackWriter.minecraft()
+                .writeToZipFile(getDataFolder().toPath().resolve("pack.zip"), resourcePack);
     }
 
     @Override

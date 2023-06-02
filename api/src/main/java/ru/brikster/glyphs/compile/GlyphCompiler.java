@@ -3,7 +3,7 @@ package ru.brikster.glyphs.compile;
 import java.util.Arrays;
 import java.util.Collection;
 import org.jetbrains.annotations.NotNull;
-import team.unnamed.creative.file.FileResource;
+import ru.brikster.glyphs.compile.resource.FileResource;
 
 public interface GlyphCompiler {
 

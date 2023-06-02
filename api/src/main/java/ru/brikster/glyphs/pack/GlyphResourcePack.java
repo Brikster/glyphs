@@ -4,10 +4,10 @@ import java.util.Collection;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.compile.ResourceProducer;
+import ru.brikster.glyphs.compile.resource.FileResource;
 import ru.brikster.glyphs.glyph.space.SpacesGlyphResourceProducer;
 import ru.brikster.glyphs.glyph.space.mojang.MojangSpacesGlyph;
-import team.unnamed.creative.file.FileResource;
-import team.unnamed.creative.file.FileTree;
+import team.unnamed.creative.ResourcePack;
 
 public interface GlyphResourcePack {
 
@@ -49,8 +49,8 @@ public interface GlyphResourcePack {
         return get(ResourceIdentifier.SPACES);
     }
 
-    default void writeAll(@NotNull FileTree tree) {
-        all().forEach(tree::write);
+    default void writeAll(@NotNull ResourcePack resourcePack) {
+        all().forEach(resource -> resource.write(resourcePack));
     }
 
     static @NotNull GlyphResourcePack create() {
