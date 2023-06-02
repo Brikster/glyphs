@@ -1,8 +1,30 @@
 plugins {
     id "glyphs.publish"
+    id 'com.diffplug.spotless' version '6.19.0' apply false
 }
 
 allprojects {
     group = "ru.brikster"
     version = "$version"
+}
+
+subprojects {
+    apply plugin: 'com.diffplug.spotless'
+
+    spotless {
+        format 'misc', {
+            target '*.gradle', '*.md', '.gitignore'
+            trimTrailingWhitespace()
+            indentWithSpaces(4)
+            endWithNewline()
+        }
+
+        java {
+            palantirJavaFormat()
+            formatAnnotations()
+            removeUnusedImports()
+            trimTrailingWhitespace()
+            endWithNewline()
+        }
+    }
 }
