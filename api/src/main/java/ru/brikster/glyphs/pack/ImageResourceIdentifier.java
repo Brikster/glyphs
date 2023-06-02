@@ -9,5 +9,4 @@ public interface ImageResourceIdentifier extends ResourceIdentifier<@NotNull Ima
     default @NotNull Class<@NotNull ImageGlyph> getType() {
         return ImageGlyph.class;
     }
-
 }

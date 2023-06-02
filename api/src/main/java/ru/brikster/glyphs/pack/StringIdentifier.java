@@ -26,13 +26,11 @@ public class StringIdentifier<T extends @NotNull ResourceProducer> implements Re
     }
 
     public static <T extends @NotNull ResourceProducer> @NotNull StringIdentifier<@NotNull T> of(
-            @NotNull String id,
-            @NotNull Class<T> type) {
+            @NotNull String id, @NotNull Class<T> type) {
         return new StringIdentifier<>(id, type);
     }
 
     public static @NotNull StringIdentifier<@NotNull ImageGlyph> image(@NotNull String id) {
         return new StringIdentifier<>(id, ImageGlyph.class);
     }
-
 }

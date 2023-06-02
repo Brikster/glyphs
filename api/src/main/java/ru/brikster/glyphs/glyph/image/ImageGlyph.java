@@ -12,15 +12,12 @@ import team.unnamed.creative.texture.Texture;
 
 public interface ImageGlyph extends AppendableGlyph, ResourceProducer {
 
-    static @NotNull ImageGlyph of(@NotNull Key key,
-                                  @NotNull Texture texture,
-                                  @NotNull TextureProperties properties) {
+    static @NotNull ImageGlyph of(@NotNull Key key, @NotNull Texture texture, @NotNull TextureProperties properties) {
         return new ImageGlyphImpl(key, texture, properties);
     }
 
     @Deprecated(forRemoval = true)
-    static @NotNull ImageGlyph of(@NotNull Texture texture,
-                                  @NotNull TextureProperties properties) {
+    static @NotNull ImageGlyph of(@NotNull Texture texture, @NotNull TextureProperties properties) {
         return of(Glyph.DEFAULT_FONT_KEY, texture, properties);
     }
 
@@ -35,5 +32,4 @@ public interface ImageGlyph extends AppendableGlyph, ResourceProducer {
     default @NotNull Component toAdventure() throws ResourceNotProducedException {
         return Component.text(character()).font(fontKey());
     }
-
 }

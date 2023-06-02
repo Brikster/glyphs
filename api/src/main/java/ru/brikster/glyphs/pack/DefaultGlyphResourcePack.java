@@ -1,14 +1,12 @@
 package ru.brikster.glyphs.pack;
 
+import java.util.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.compile.GlyphCompiler;
 import ru.brikster.glyphs.compile.ResourceProducer;
 import team.unnamed.creative.file.FileResource;
-
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
-import java.util.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DefaultGlyphResourcePack implements GlyphResourcePack {
@@ -35,7 +33,8 @@ public class DefaultGlyphResourcePack implements GlyphResourcePack {
     }
 
     @Override
-    public @NotNull <T extends ResourceProducer> GlyphResourcePack with(@NotNull ResourceIdentifier<@NotNull T> id, @NotNull T producer) {
+    public @NotNull <T extends ResourceProducer> GlyphResourcePack with(
+            @NotNull ResourceIdentifier<@NotNull T> id, @NotNull T producer) {
         if (raw.containsKey(id.key()) || compiled.containsKey(id.key())) {
             throw new IllegalArgumentException("Producer with " + id.key() + " identifier already registered");
         }
@@ -50,7 +49,8 @@ public class DefaultGlyphResourcePack implements GlyphResourcePack {
     }
 
     @Override
-    public <T extends ResourceProducer> @NotNull T get(@NotNull ResourceIdentifier<@NotNull T> id) throws IllegalArgumentException {
+    public <T extends ResourceProducer> @NotNull T get(@NotNull ResourceIdentifier<@NotNull T> id)
+            throws IllegalArgumentException {
         if (!compiled.containsKey(id.key())) {
             throw new IllegalArgumentException("Producer with " + id.key() + " identifier is not compiled");
         }
@@ -60,5 +60,4 @@ public class DefaultGlyphResourcePack implements GlyphResourcePack {
         }
         return (T) producer;
     }
-
 }

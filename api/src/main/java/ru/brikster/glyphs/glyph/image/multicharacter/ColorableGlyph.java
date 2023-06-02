@@ -8,5 +8,4 @@ public interface ColorableGlyph {
     @Nullable TextColor color();
 
     void updateColor(@Nullable TextColor color);
-
 }

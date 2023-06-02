@@ -1,14 +1,13 @@
 package ru.brikster.glyphs.compile;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 
 public class DefaultArbitraryCharacterFactory implements ArbitraryCharacterFactory {
 
-    private final static Set<Character> reservedCharacters = new HashSet<>();
+    private static final Set<Character> reservedCharacters = new HashSet<>();
 
     static {
         for (char c = 'a'; c <= 'z'; c++) reservedCharacters.add(c);
@@ -18,17 +17,9 @@ public class DefaultArbitraryCharacterFactory implements ArbitraryCharacterFacto
         for (char c = '0'; c <= '9'; c++) reservedCharacters.add(c);
 
         reservedCharacters.addAll(Arrays.asList(
-                '!', '?', ':', '$',
-                ';', '#', '@', '%',
-                '^', '&', '*', '(',
-                ')', '_', '-', '+',
-                '/', '\\', '№', '"',
-                '\'', '{', '}', '[',
-                ']', '~', '`', '<', '>',
-                ',', '.', '|', '\n', '\r',
-                '\b', '\f', '\t', ' ',
-                'ё', 'Ё', '=')
-        );
+                '!', '?', ':', '$', ';', '#', '@', '%', '^', '&', '*', '(', ')', '_', '-', '+', '/', '\\', '№', '"',
+                '\'', '{', '}', '[', ']', '~', '`', '<', '>', ',', '.', '|', '\n', '\r', '\b', '\f', '\t', ' ', 'ё',
+                'Ё', '='));
     }
 
     private char currentChar = '\uA201';
@@ -49,5 +40,4 @@ public class DefaultArbitraryCharacterFactory implements ArbitraryCharacterFacto
     private boolean isCharacterAllowed(char c) {
         return !reservedCharacters.contains(c);
     }
-
 }

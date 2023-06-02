@@ -10,14 +10,14 @@ import ru.brikster.glyphs.glyph.exception.ResourceNotProducedException;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class ColoredImageGlyphImpl implements ColoredImageGlyph {
+
     private final ImageGlyph original;
     private TextColor color;
 
     @Override
     public @NotNull Component toAdventure() throws ResourceNotProducedException {
         Component component = this.original.toAdventure();
-        if (color != null)
-            component = component.color(color);
+        if (color != null) component = component.color(color);
 
         return component;
     }

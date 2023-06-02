@@ -1,5 +1,7 @@
 package ru.brikster.glyphs.glyph.image.multicharacter;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -7,9 +9,6 @@ import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.brikster.glyphs.glyph.AppendableGlyph;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class PreparedImageGlyph implements AppendableGlyph, ColorableGlyph {
@@ -21,9 +20,7 @@ public class PreparedImageGlyph implements AppendableGlyph, ColorableGlyph {
 
     @Override
     public @NotNull Component toAdventure() {
-        return Component.text(character)
-                .font(key)
-                .color(color == null ? NamedTextColor.BLACK : color);
+        return Component.text(character).font(key).color(color == null ? NamedTextColor.BLACK : color);
     }
 
     @Override
@@ -40,5 +37,4 @@ public class PreparedImageGlyph implements AppendableGlyph, ColorableGlyph {
     public void updateColor(@Nullable TextColor color) {
         this.color = color;
     }
-
 }

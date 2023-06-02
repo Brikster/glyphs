@@ -1,5 +1,6 @@
 package ru.brikster.glyphs.glyph.image.multicharacter;
 
+import java.util.*;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -15,28 +16,24 @@ import ru.brikster.glyphs.util.kyori.KyoriUtil.ColoredPartsFlattenerListener.Col
 import team.unnamed.creative.font.FontProvider;
 import team.unnamed.creative.texture.Texture;
 
-import java.util.*;
-
 public class LanguageGlyphCollectionImpl implements LanguageGlyphCollection {
 
     private final Key fontKey;
     private final Texture texture;
 
-    private final Map<TextureProperties, MulticharacterImageGlyphCollection> propertiesToMulticharacterMap = new HashMap<>();
+    private final Map<TextureProperties, MulticharacterImageGlyphCollection> propertiesToMulticharacterMap =
+            new HashMap<>();
 
     private Set<FontProvider> fontProviders;
 
     LanguageGlyphCollectionImpl(
-            Key fontKey,
-            Texture texture,
-            List<TextureProperties> propertiesList,
-            List<String> charactersMapping
-    ) {
+            Key fontKey, Texture texture, List<TextureProperties> propertiesList, List<String> charactersMapping) {
         this.fontKey = fontKey;
         this.texture = texture;
 
         for (TextureProperties properties : propertiesList) {
-            propertiesToMulticharacterMap.put(properties, MulticharacterImageGlyphCollection.of(fontKey, texture, properties, charactersMapping));
+            propertiesToMulticharacterMap.put(
+                    properties, MulticharacterImageGlyphCollection.of(fontKey, texture, properties, charactersMapping));
         }
     }
 
@@ -74,8 +71,7 @@ public class LanguageGlyphCollectionImpl implements LanguageGlyphCollection {
         return Collections.singleton(texture);
     }
 
-    @NotNull
-    private MulticharacterImageGlyphCollection getGlyphCollection(int height, int ascent) {
+    @NotNull private MulticharacterImageGlyphCollection getGlyphCollection(int height, int ascent) {
         TextureProperties properties = new TextureProperties(height, ascent);
         MulticharacterImageGlyphCollection glyphCollection = propertiesToMulticharacterMap.get(properties);
         if (glyphCollection == null) {
@@ -85,19 +81,23 @@ public class LanguageGlyphCollectionImpl implements LanguageGlyphCollection {
     }
 
     @Override
-    public @NotNull AppendableGlyph translate(int height, int ascent, @NotNull Character character, @Nullable TextColor color) throws IllegalArgumentException {
+    public @NotNull AppendableGlyph translate(
+            int height, int ascent, @NotNull Character character, @Nullable TextColor color)
+            throws IllegalArgumentException {
         MulticharacterImageGlyphCollection glyphCollection = getGlyphCollection(height, ascent);
         return glyphCollection.translate(character, color);
     }
 
     @Override
-    public @NotNull List<@NotNull AppendableGlyph> translate(int height, int ascent, @NotNull String text, @Nullable TextColor color) throws IllegalArgumentException {
+    public @NotNull List<@NotNull AppendableGlyph> translate(
+            int height, int ascent, @NotNull String text, @Nullable TextColor color) throws IllegalArgumentException {
         MulticharacterImageGlyphCollection glyphCollection = getGlyphCollection(height, ascent);
         return Collections.unmodifiableList(glyphCollection.translate(text, color));
     }
 
     @Override
-    public @NotNull List<@NotNull AppendableGlyph> translate(int height, int ascent, @NotNull Component component) throws IllegalArgumentException {
+    public @NotNull List<@NotNull AppendableGlyph> translate(int height, int ascent, @NotNull Component component)
+            throws IllegalArgumentException {
         MulticharacterImageGlyphCollection glyphCollection = getGlyphCollection(height, ascent);
         List<AppendableGlyph> result = new ArrayList<>();
         List<? extends ColoredComponentTextPart> textAndColors = KyoriUtil.toColoredParts(component);
@@ -109,5 +109,4 @@ public class LanguageGlyphCollectionImpl implements LanguageGlyphCollection {
 
         return Collections.unmodifiableList(result);
     }
-
 }

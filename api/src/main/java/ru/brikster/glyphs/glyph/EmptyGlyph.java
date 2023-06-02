@@ -1,11 +1,10 @@
 package ru.brikster.glyphs.glyph;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.glyph.exception.ResourceNotProducedException;
-
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EmptyGlyph implements AppendableGlyph {
@@ -21,5 +20,4 @@ public class EmptyGlyph implements AppendableGlyph {
     public int width() {
         return 0;
     }
-
 }

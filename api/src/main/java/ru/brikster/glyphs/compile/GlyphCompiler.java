@@ -1,10 +1,9 @@
 package ru.brikster.glyphs.compile;
 
-import org.jetbrains.annotations.NotNull;
-import team.unnamed.creative.file.FileResource;
-
 import java.util.Arrays;
 import java.util.Collection;
+import org.jetbrains.annotations.NotNull;
+import team.unnamed.creative.file.FileResource;
 
 public interface GlyphCompiler {
 
@@ -12,10 +11,10 @@ public interface GlyphCompiler {
         return new DefaultGlyphCompiler();
     }
 
-    @NotNull Collection<@NotNull FileResource> compile(@NotNull Collection<@NotNull ResourceProducer> resourceProducerCollection);
+    @NotNull Collection<@NotNull FileResource> compile(
+            @NotNull Collection<@NotNull ResourceProducer> resourceProducerCollection);
 
     default @NotNull Collection<@NotNull FileResource> compile(@NotNull ResourceProducer... resourceProducer) {
         return compile(Arrays.asList(resourceProducer));
     }
-
 }

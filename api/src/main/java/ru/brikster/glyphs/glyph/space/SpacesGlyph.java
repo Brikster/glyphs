@@ -1,13 +1,12 @@
 package ru.brikster.glyphs.glyph.space;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.glyph.Glyph;
 import team.unnamed.creative.base.Writable;
-
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class SpacesGlyph implements Glyph {
@@ -18,9 +17,8 @@ public class SpacesGlyph implements Glyph {
     private final char[] characters;
     private final int length;
 
-    public static @NotNull SpacesGlyphResourceProducer create(@NotNull Key fontKey,
-                                                              @NotNull Key textureKey,
-                                                              @NotNull Writable spacesWritable) {
+    public static @NotNull SpacesGlyphResourceProducer create(
+            @NotNull Key fontKey, @NotNull Key textureKey, @NotNull Writable spacesWritable) {
         return new DefaultSpacesGlyphResourceProducer(fontKey, textureKey, spacesWritable);
     }
 
@@ -37,5 +35,4 @@ public class SpacesGlyph implements Glyph {
     public int width() {
         return length;
     }
-
 }

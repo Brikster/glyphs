@@ -1,5 +1,12 @@
 package ru.brikster.glyphs.resources;
 
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.glyph.Glyph;
@@ -14,21 +21,16 @@ import team.unnamed.creative.model.Model;
 import team.unnamed.creative.model.ModelTexture;
 import team.unnamed.creative.texture.Texture;
 
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 public final class GlyphResources {
 
     private static final String GLYPHS_RESOURCES_FOLDER = "glyphs-resources";
     public static final Writable SPACE_IMAGE_WRITABLE = resourceFromJar(GLYPHS_RESOURCES_FOLDER + '/' + "space.png");
-    public static final Writable BLANK_SLOT_IMAGE_WRITABLE = resourceFromJar(GLYPHS_RESOURCES_FOLDER + '/' + "blank_slot.png");
-    public static final Writable MINECRAFT_FONT_IMAGE_WRITABLE = resourceFromJar(GLYPHS_RESOURCES_FOLDER + '/' + "minecraft_font.png");
-    public static final Writable BACKGROUND_WRITABLE = resourceFromJar(GLYPHS_RESOURCES_FOLDER + '/' + "fullscreen_background.png");
+    public static final Writable BLANK_SLOT_IMAGE_WRITABLE =
+            resourceFromJar(GLYPHS_RESOURCES_FOLDER + '/' + "blank_slot.png");
+    public static final Writable MINECRAFT_FONT_IMAGE_WRITABLE =
+            resourceFromJar(GLYPHS_RESOURCES_FOLDER + '/' + "minecraft_font.png");
+    public static final Writable BACKGROUND_WRITABLE =
+            resourceFromJar(GLYPHS_RESOURCES_FOLDER + '/' + "fullscreen_background.png");
     private static final Key PAPER_ITEM_KEY = Key.key("item/paper");
 
     private static final Key MINECRAFT_FONT_KEY = Key.key(Glyph.DEFAULT_NAMESPACE, "minecraft_font");
@@ -52,13 +54,14 @@ public final class GlyphResources {
         });
     }
 
-    public static @NotNull LanguageGlyphCollection minecraftFontGlyphCollection(@NotNull Key fontKey,
-                                                                       @NotNull Key textureKey,
-                                                                       @NotNull List<@NotNull TextureProperties> propertiesList) {
-        return LanguageGlyphCollection.of(fontKey,
+    public static @NotNull LanguageGlyphCollection minecraftFontGlyphCollection(
+            @NotNull Key fontKey, @NotNull Key textureKey, @NotNull List<@NotNull TextureProperties> propertiesList) {
+        return LanguageGlyphCollection.of(
+                fontKey,
                 Texture.of(textureKey, MINECRAFT_FONT_IMAGE_WRITABLE),
                 propertiesList,
-                List.of("      АБВГДЕЖЗИК",
+                List.of(
+                        "      АБВГДЕЖЗИК",
                         "ЛМНОПРСТУФХЦЧШЩЪ",
                         "ЫЬЭЮЯабвгдежзикл",
                         "мнопрстуфхцчшщъы",
@@ -68,21 +71,20 @@ public final class GlyphResources {
                         "@ABCDEFGHIJKLMNO",
                         "PQRSTUVWXYZ[\\]^_",
                         "`abcdefghijklmno",
-                        "pqrstuvwxyz{|}  ")
-        );
+                        "pqrstuvwxyz{|}  "));
     }
 
-    public static @NotNull LanguageGlyphCollection minecraftFontGlyphCollection(@NotNull List<@NotNull TextureProperties> propertiesList) {
+    public static @NotNull LanguageGlyphCollection minecraftFontGlyphCollection(
+            @NotNull List<@NotNull TextureProperties> propertiesList) {
         return minecraftFontGlyphCollection(MINECRAFT_FONT_KEY, MINECRAFT_FONT_KEY, propertiesList);
     }
 
-    public static @NotNull Collection<@NotNull FileResource> blankSlotResources(@NotNull Key modelKey, @NotNull Key itemKey, int customModelData) {
+    public static @NotNull Collection<@NotNull FileResource> blankSlotResources(
+            @NotNull Key modelKey, @NotNull Key itemKey, int customModelData) {
         Model blankSlotModel = Model.builder()
                 .key(modelKey)
                 .parent(Model.ITEM_GENERATED)
-                .textures(ModelTexture.builder()
-                        .layers(modelKey)
-                        .build())
+                .textures(ModelTexture.builder().layers(modelKey).build())
                 .build();
 
         Model paperItemModel = Model.builder()
@@ -102,15 +104,11 @@ public final class GlyphResources {
         return blankSlotResources(Key.key(Glyph.DEFAULT_NAMESPACE, "blank_slot"), PAPER_ITEM_KEY, 1);
     }
 
-    public static @NotNull ImageGlyph fullscreenBackgroundGlyph(@NotNull Key fontKey,
-                                                                @NotNull Key textureKey) {
-        return ImageGlyph.of(fontKey,
-                Texture.of(textureKey, BACKGROUND_WRITABLE),
-                new TextureProperties(2500, 256));
+    public static @NotNull ImageGlyph fullscreenBackgroundGlyph(@NotNull Key fontKey, @NotNull Key textureKey) {
+        return ImageGlyph.of(fontKey, Texture.of(textureKey, BACKGROUND_WRITABLE), new TextureProperties(2500, 256));
     }
 
     public static @NotNull ImageGlyph fullscreenBackgroundGlyph() {
         return fullscreenBackgroundGlyph(FULLSCREEN_BACKGROUND_KEY, FULLSCREEN_BACKGROUND_KEY);
     }
-
 }

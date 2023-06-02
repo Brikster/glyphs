@@ -1,11 +1,10 @@
 package ru.brikster.glyphs.glyph;
 
+import java.util.List;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.glyph.space.SpacesGlyphResourceProducer;
-
-import java.util.List;
 
 public interface GlyphComponentBuilder {
 
@@ -17,7 +16,8 @@ public interface GlyphComponentBuilder {
         return new GlyphComponentBuilderImpl(spacesProducer, -8, Component.text("", NamedTextColor.WHITE));
     }
 
-    static @NotNull GlyphComponentBuilder custom(SpacesGlyphResourceProducer spacesProducer, int position, Component baseComponent) {
+    static @NotNull GlyphComponentBuilder custom(
+            SpacesGlyphResourceProducer spacesProducer, int position, Component baseComponent) {
         return new GlyphComponentBuilderImpl(spacesProducer, position, baseComponent);
     }
 
@@ -27,9 +27,11 @@ public interface GlyphComponentBuilder {
         return append(positionType, 0, glyph);
     }
 
-    @NotNull GlyphComponentBuilder append(PositionType positionType, int position, @NotNull List<? extends @NotNull AppendableGlyph> glyphList);
+    @NotNull GlyphComponentBuilder append(
+            PositionType positionType, int position, @NotNull List<? extends @NotNull AppendableGlyph> glyphList);
 
-    default @NotNull GlyphComponentBuilder append(PositionType positionType, @NotNull List<? extends @NotNull AppendableGlyph> glyphList) {
+    default @NotNull GlyphComponentBuilder append(
+            PositionType positionType, @NotNull List<? extends @NotNull AppendableGlyph> glyphList) {
         return append(positionType, 0, glyphList);
     }
 
@@ -38,12 +40,13 @@ public interface GlyphComponentBuilder {
     default @NotNull GlyphComponentBuilder append(int position, @NotNull AppendableGlyph glyph) {
         return append(PositionType.ABSOLUTE, position, glyph);
     }
-    
+
     default @NotNull GlyphComponentBuilder append(@NotNull AppendableGlyph glyph) {
         return append(PositionType.ABSOLUTE, glyph);
     }
 
-    default @NotNull GlyphComponentBuilder append(int position, @NotNull List<? extends @NotNull AppendableGlyph> glyphList) {
+    default @NotNull GlyphComponentBuilder append(
+            int position, @NotNull List<? extends @NotNull AppendableGlyph> glyphList) {
         return append(PositionType.ABSOLUTE, position, glyphList);
     }
 
@@ -61,5 +64,4 @@ public interface GlyphComponentBuilder {
         ABSOLUTE,
         RELATIVE
     }
-
 }

@@ -1,14 +1,12 @@
 package ru.brikster.glyphs.glyph;
 
+import java.util.ArrayList;
+import java.util.List;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.glyph.space.SpacesGlyphResourceProducer;
-
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class GlyphComponentBuilderImpl implements GlyphComponentBuilder {
@@ -22,7 +20,8 @@ public class GlyphComponentBuilderImpl implements GlyphComponentBuilder {
     private int previousElementsWidth;
 
     @Override
-    public @NotNull GlyphComponentBuilder append(PositionType positionType, int position, @NotNull AppendableGlyph glyph) {
+    public @NotNull GlyphComponentBuilder append(
+            PositionType positionType, int position, @NotNull AppendableGlyph glyph) {
         if (positionType == PositionType.ABSOLUTE && previousElementsWidth != 0) {
             glyphs.add(spacesProducer.translate((-1) * previousElementsWidth));
             previousElementsWidth = 0;
@@ -39,7 +38,8 @@ public class GlyphComponentBuilderImpl implements GlyphComponentBuilder {
     }
 
     @Override
-    public @NotNull GlyphComponentBuilder append(PositionType positionType, int position, @NotNull List<? extends @NotNull AppendableGlyph> glyphList) {
+    public @NotNull GlyphComponentBuilder append(
+            PositionType positionType, int position, @NotNull List<? extends @NotNull AppendableGlyph> glyphList) {
         if (positionType == PositionType.ABSOLUTE && previousElementsWidth != 0) {
             glyphs.add(spacesProducer.translate((-1) * previousElementsWidth));
             previousElementsWidth = 0;
@@ -74,7 +74,8 @@ public class GlyphComponentBuilderImpl implements GlyphComponentBuilder {
         var component = baseComponent;
 
         if (initialPosition != 0) {
-            component = component.append(spacesProducer.translate(initialPosition).toAdventure());
+            component =
+                    component.append(spacesProducer.translate(initialPosition).toAdventure());
         }
 
         for (Glyph glyph : glyphs) {
@@ -83,5 +84,4 @@ public class GlyphComponentBuilderImpl implements GlyphComponentBuilder {
 
         return component;
     }
-
 }

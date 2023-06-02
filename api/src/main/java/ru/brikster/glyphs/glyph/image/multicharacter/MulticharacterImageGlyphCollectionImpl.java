@@ -1,5 +1,12 @@
 package ru.brikster.glyphs.glyph.image.multicharacter;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.*;
+import javax.imageio.ImageIO;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
@@ -12,15 +19,6 @@ import ru.brikster.glyphs.glyph.image.TextureProperties;
 import ru.brikster.glyphs.util.ImageUtil;
 import team.unnamed.creative.font.FontProvider;
 import team.unnamed.creative.texture.Texture;
-
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.*;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class MulticharacterImageGlyphCollectionImpl implements MulticharacterImageGlyphCollection {
@@ -85,7 +83,8 @@ public class MulticharacterImageGlyphCollectionImpl implements MulticharacterIma
     }
 
     @Override
-    public @NotNull PreparedImageGlyph translate(@NotNull Character character, @Nullable TextColor color) throws IllegalArgumentException {
+    public @NotNull PreparedImageGlyph translate(@NotNull Character character, @Nullable TextColor color)
+            throws IllegalArgumentException {
         if (!originToArbitraryCharacterMap.containsKey(character)) {
             throw new IllegalArgumentException("Illegal character: " + character);
         }
@@ -103,15 +102,18 @@ public class MulticharacterImageGlyphCollectionImpl implements MulticharacterIma
                         throw new IllegalArgumentException("Image " + texture.key() + " not found");
                     }
 
-                    int filePartWidth = image.getWidth() / charactersMapping.get(0).length();
+                    int filePartWidth =
+                            image.getWidth() / charactersMapping.get(0).length();
                     int filePartHeight = image.getHeight() / charactersMapping.size();
 
-                    width = (int) Math.ceil(
-                            ((double) properties.height() / (double) filePartHeight)
+                    width = (int) Math.ceil(((double) properties.height() / (double) filePartHeight)
                                     * ImageUtil.calculateWidth(
-                                    image, filePartWidth * characterIndex, filePartHeight * lineIndex,
-                                    filePartWidth * (characterIndex + 1), filePartHeight * (lineIndex + 1)
-                            )) + Glyph.SEPARATOR_WIDTH;
+                                            image,
+                                            filePartWidth * characterIndex,
+                                            filePartHeight * lineIndex,
+                                            filePartWidth * (characterIndex + 1),
+                                            filePartHeight * (lineIndex + 1)))
+                            + Glyph.SEPARATOR_WIDTH;
                     break;
                 }
             }
@@ -127,5 +129,4 @@ public class MulticharacterImageGlyphCollectionImpl implements MulticharacterIma
             e.printStackTrace();
         }
     }
-
 }

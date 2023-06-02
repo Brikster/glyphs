@@ -4,6 +4,14 @@ import com.github.stefvanschie.inventoryframework.adventuresupport.ComponentHold
 import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.List;
+import java.util.Objects;
+import java.util.zip.ZipOutputStream;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.sound.Sound.Source;
@@ -37,16 +45,6 @@ import team.unnamed.creative.metadata.Metadata;
 import team.unnamed.creative.metadata.PackMeta;
 import team.unnamed.creative.texture.Texture;
 
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.List;
-import java.util.Objects;
-import java.util.zip.ZipOutputStream;
-
 public final class ExamplePlugin extends JavaPlugin implements Listener {
 
     private ChestGui gui;
@@ -68,10 +66,8 @@ public final class ExamplePlugin extends JavaPlugin implements Listener {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender,
-                             @NotNull Command command,
-                             @NotNull String label,
-                             @NotNull String[] args) {
+    public boolean onCommand(
+            @NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player) {
             gui.show((HumanEntity) sender);
         } else {
@@ -85,26 +81,34 @@ public final class ExamplePlugin extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(this, this);
 
         GlyphResourcePack pack = GlyphResourcePack.create()
-                .with(ImageId.GUI_BACKGROUND, ImageGlyph.of(
-                        Key.key("glyphs", "example_gui"),
-                        Texture.of(
-                                Key.key(Glyph.DEFAULT_NAMESPACE, "gui/gui_background"),
-                                GlyphResources.resourceFromJar("gui_background.png")),
-                        new TextureProperties(256, 19)))
-                .with(ImageId.EXAMPLE_BUTTON, ImageGlyph.of(
-                        Key.key("glyphs", "example_gui"),
-                        Texture.of(
-                                Key.key(Glyph.DEFAULT_NAMESPACE, "gui/example_button"),
-                                GlyphResources.resourceFromJar("example_button.png")),
-                        new TextureProperties(22, -56)))
-                .with(ImageId.EXAMPLE_LOGO, ImageGlyph.of(
-                        Key.key("glyphs", "example_chat_message"),
-                        Texture.of(
-                                Key.key(Glyph.DEFAULT_NAMESPACE, "chat/example_logo"),
-                                GlyphResources.resourceFromJar("example_logo.png")),
-                        new TextureProperties(50, 6)))
-                .with(ResourceIdentifier.MINECRAFT_FONT, GlyphResources.minecraftFontGlyphCollection(
-                        List.of(new TextureProperties(12, -6),
+                .with(
+                        ImageId.GUI_BACKGROUND,
+                        ImageGlyph.of(
+                                Key.key("glyphs", "example_gui"),
+                                Texture.of(
+                                        Key.key(Glyph.DEFAULT_NAMESPACE, "gui/gui_background"),
+                                        GlyphResources.resourceFromJar("gui_background.png")),
+                                new TextureProperties(256, 19)))
+                .with(
+                        ImageId.EXAMPLE_BUTTON,
+                        ImageGlyph.of(
+                                Key.key("glyphs", "example_gui"),
+                                Texture.of(
+                                        Key.key(Glyph.DEFAULT_NAMESPACE, "gui/example_button"),
+                                        GlyphResources.resourceFromJar("example_button.png")),
+                                new TextureProperties(22, -56)))
+                .with(
+                        ImageId.EXAMPLE_LOGO,
+                        ImageGlyph.of(
+                                Key.key("glyphs", "example_chat_message"),
+                                Texture.of(
+                                        Key.key(Glyph.DEFAULT_NAMESPACE, "chat/example_logo"),
+                                        GlyphResources.resourceFromJar("example_logo.png")),
+                                new TextureProperties(50, 6)))
+                .with(
+                        ResourceIdentifier.MINECRAFT_FONT,
+                        GlyphResources.minecraftFontGlyphCollection(List.of(
+                                new TextureProperties(12, -6),
                                 new TextureProperties(8, -24),
                                 new TextureProperties(8, -36))))
                 .withMojangSpaces()
@@ -119,7 +123,10 @@ public final class ExamplePlugin extends JavaPlugin implements Listener {
                 .append(16, font.translate(12, -6, "Example text"))
                 .append(16, font.translate(8, -24, "Hello "))
                 .append(PositionType.RELATIVE, font.translate(8, -24, "world..."))
-                .append(PositionType.ABSOLUTE, 16, font.translate(8, -36, "Hello world...", NamedTextColor.LIGHT_PURPLE))
+                .append(
+                        PositionType.ABSOLUTE,
+                        16,
+                        font.translate(8, -36, "Hello world...", NamedTextColor.LIGHT_PURPLE))
                 .build()
                 .append(Component.text("Test menu with glyphs", NamedTextColor.DARK_GRAY, TextDecoration.UNDERLINED));
 
@@ -188,5 +195,4 @@ public final class ExamplePlugin extends JavaPlugin implements Listener {
             return key;
         }
     }
-
 }

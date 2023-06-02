@@ -1,25 +1,22 @@
 package ru.brikster.glyphs.compile;
 
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 import team.unnamed.creative.file.FileResource;
 import team.unnamed.creative.font.Font;
 import team.unnamed.creative.font.FontProvider;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 public class DefaultGlyphCompiler implements GlyphCompiler {
 
     @Override
-    public @NotNull Collection<@NotNull FileResource> compile(@NotNull Collection<@NotNull ResourceProducer> producers) {
+    public @NotNull Collection<@NotNull FileResource> compile(
+            @NotNull Collection<@NotNull ResourceProducer> producers) {
         Set<FileResource> fileResources = new HashSet<>();
 
-        Set<Key> fontKeys = producers
-                .stream()
-                .map(ResourceProducer::fontKey)
-                .collect(Collectors.toUnmodifiableSet());
+        Set<Key> fontKeys = producers.stream().map(ResourceProducer::fontKey).collect(Collectors.toUnmodifiableSet());
 
         for (Key key : fontKeys) {
             List<FontProvider> fontProviders = new ArrayList<>();
@@ -42,6 +39,4 @@ public class DefaultGlyphCompiler implements GlyphCompiler {
     <T> Iterable<T> toIterable(final Stream<T> stream) {
         return stream::iterator;
     }
-
-
 }

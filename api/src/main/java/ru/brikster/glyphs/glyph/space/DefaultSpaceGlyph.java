@@ -1,13 +1,12 @@
 package ru.brikster.glyphs.glyph.space;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.glyph.AppendableGlyph;
 import ru.brikster.glyphs.glyph.exception.ResourceNotProducedException;
 import team.unnamed.creative.font.Font;
-
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class DefaultSpaceGlyph implements AppendableGlyph {
@@ -21,5 +20,4 @@ public class DefaultSpaceGlyph implements AppendableGlyph {
     public int width() {
         return 4;
     }
-
 }

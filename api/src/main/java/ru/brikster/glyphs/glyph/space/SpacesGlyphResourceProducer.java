@@ -7,5 +7,4 @@ import ru.brikster.glyphs.glyph.exception.ResourceNotProducedException;
 public interface SpacesGlyphResourceProducer extends ResourceProducer {
 
     Glyph translate(int length) throws ResourceNotProducedException;
-
 }

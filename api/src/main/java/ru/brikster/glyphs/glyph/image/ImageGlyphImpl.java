@@ -1,5 +1,14 @@
 package ru.brikster.glyphs.glyph.image;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
+import javax.imageio.ImageIO;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.compile.ArbitraryCharacterFactory;
@@ -9,17 +18,6 @@ import ru.brikster.glyphs.glyph.exception.ResourceNotProducedException;
 import ru.brikster.glyphs.util.ImageUtil;
 import team.unnamed.creative.font.FontProvider;
 import team.unnamed.creative.texture.Texture;
-
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class ImageGlyphImpl implements ImageGlyph {
@@ -78,11 +76,12 @@ public class ImageGlyphImpl implements ImageGlyph {
     public int width() {
         if (width == -1) {
             try {
-                BufferedImage image = ImageIO.read(new ByteArrayInputStream(texture.data().toByteArray()));
+                BufferedImage image =
+                        ImageIO.read(new ByteArrayInputStream(texture.data().toByteArray()));
                 int fileHeight = image.getHeight();
                 width = (int) Math.ceil(
-                        ((double) properties.height() / (double) fileHeight)
-                                * ImageUtil.calculateWidth(image)) + Glyph.SEPARATOR_WIDTH;
+                                ((double) properties.height() / (double) fileHeight) * ImageUtil.calculateWidth(image))
+                        + Glyph.SEPARATOR_WIDTH;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -102,5 +101,4 @@ public class ImageGlyphImpl implements ImageGlyph {
     public @NotNull Texture texture() {
         return texture;
     }
-
 }

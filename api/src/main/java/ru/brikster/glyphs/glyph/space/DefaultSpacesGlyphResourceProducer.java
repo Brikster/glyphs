@@ -1,5 +1,6 @@
 package ru.brikster.glyphs.glyph.space;
 
+import java.util.*;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.compile.ArbitraryCharacterFactory;
@@ -9,8 +10,6 @@ import team.unnamed.creative.base.Writable;
 import team.unnamed.creative.font.BitMapFontProvider;
 import team.unnamed.creative.font.FontProvider;
 import team.unnamed.creative.texture.Texture;
-
-import java.util.*;
 
 public class DefaultSpacesGlyphResourceProducer extends AbstractSpacesGlyphResourceProducer {
 
@@ -66,8 +65,7 @@ public class DefaultSpacesGlyphResourceProducer extends AbstractSpacesGlyphResou
         return textures;
     }
 
-    @NotNull
-    private BitMapFontProvider.Builder prepareBuilder(ArbitraryCharacterFactory characterFactory, int length) {
+    @NotNull private BitMapFontProvider.Builder prepareBuilder(ArbitraryCharacterFactory characterFactory, int length) {
         var fontProviderBuilder = FontProvider.bitMap();
 
         char character = characterFactory.nextCharacter();
@@ -87,5 +85,4 @@ public class DefaultSpacesGlyphResourceProducer extends AbstractSpacesGlyphResou
 
         return fontProviderBuilder;
     }
-
 }

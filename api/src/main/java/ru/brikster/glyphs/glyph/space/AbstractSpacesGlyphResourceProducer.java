@@ -1,17 +1,15 @@
 package ru.brikster.glyphs.glyph.space;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.glyph.EmptyGlyph;
 import ru.brikster.glyphs.glyph.Glyph;
 import ru.brikster.glyphs.glyph.exception.ResourceNotProducedException;
 import ru.brikster.glyphs.util.ArrayUtil;
-
-import lombok.RequiredArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 public abstract class AbstractSpacesGlyphResourceProducer implements SpacesGlyphResourceProducer {
@@ -60,5 +58,4 @@ public abstract class AbstractSpacesGlyphResourceProducer implements SpacesGlyph
 
         return new SpacesGlyph(fontKey(), ArrayUtil.toCharArray(characters), length);
     }
-
 }

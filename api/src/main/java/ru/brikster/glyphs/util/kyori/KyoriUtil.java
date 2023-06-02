@@ -1,5 +1,7 @@
 package ru.brikster.glyphs.util.kyori;
 
+import java.util.*;
+import lombok.experimental.UtilityClass;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.flattener.ComponentFlattener;
 import net.kyori.adventure.text.flattener.FlattenerListener;
@@ -8,10 +10,6 @@ import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 import ru.brikster.glyphs.util.kyori.KyoriUtil.ColoredPartsFlattenerListener.ColoredComponentTextPart;
-
-import lombok.experimental.UtilityClass;
-
-import java.util.*;
 
 @UtilityClass
 public class KyoriUtil {
@@ -58,7 +56,5 @@ public class KyoriUtil {
         }
 
         public record ColoredComponentTextPart(String text, TextColor color) {}
-
     }
-
 }

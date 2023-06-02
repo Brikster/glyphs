@@ -19,5 +19,4 @@ public interface Glyph {
     @NotNull Component toAdventure() throws ResourceNotProducedException;
 
     int width();
-
 }

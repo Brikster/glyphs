@@ -1,10 +1,8 @@
 package ru.brikster.glyphs.util;
 
-import org.jetbrains.annotations.NotNull;
-
-import lombok.experimental.UtilityClass;
-
 import java.util.List;
+import lombok.experimental.UtilityClass;
+import org.jetbrains.annotations.NotNull;
 
 @UtilityClass
 public class ArrayUtil {
@@ -16,5 +14,4 @@ public class ArrayUtil {
         }
         return arr;
     }
-
 }
