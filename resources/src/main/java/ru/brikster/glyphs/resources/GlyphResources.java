@@ -72,7 +72,8 @@ public final class GlyphResources {
 
     public static @NotNull LanguageGlyphCollection minecraftFontGlyphCollection(
             @NotNull List<@NotNull TextureProperties> propertiesList) {
-        return minecraftFontGlyphCollection(MINECRAFT_FONT_KEY, MINECRAFT_FONT_KEY, propertiesList);
+        return minecraftFontGlyphCollection(
+                MINECRAFT_FONT_KEY, keyWithPngExtension(MINECRAFT_FONT_KEY), propertiesList);
     }
 
     public static @NotNull Collection<@NotNull FileResource> blankSlotResources(
@@ -94,7 +95,7 @@ public final class GlyphResources {
                 .overrides(ItemOverride.of(modelKey, ItemPredicate.customModelData(customModelData)))
                 .build();
 
-        Texture texture = Texture.of(modelKey, BLANK_SLOT_IMAGE_WRITABLE);
+        Texture texture = Texture.of(keyWithPngExtension(modelKey), BLANK_SLOT_IMAGE_WRITABLE);
         return Arrays.asList(
                 FileResource.fromModel(blankSlotModel),
                 FileResource.fromModel(paperItemModel),
@@ -110,6 +111,11 @@ public final class GlyphResources {
     }
 
     public static @NotNull ImageGlyph fullscreenBackgroundGlyph() {
-        return fullscreenBackgroundGlyph(FULLSCREEN_BACKGROUND_KEY, FULLSCREEN_BACKGROUND_KEY);
+        return fullscreenBackgroundGlyph(FULLSCREEN_BACKGROUND_KEY, keyWithPngExtension(FULLSCREEN_BACKGROUND_KEY));
+    }
+
+    public static Key keyWithPngExtension(@NotNull Key key) {
+        //noinspection PatternValidation
+        return Key.key(key.namespace(), key.value().concat(".png"));
     }
 }
