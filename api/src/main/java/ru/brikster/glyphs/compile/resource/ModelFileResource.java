@@ -5,7 +5,7 @@ import team.unnamed.creative.ResourcePack;
 import team.unnamed.creative.model.Model;
 
 @RequiredArgsConstructor
-public class ModelFileResource implements FileResource {
+public final class ModelFileResource implements FileResource {
 
     private final Model model;
 

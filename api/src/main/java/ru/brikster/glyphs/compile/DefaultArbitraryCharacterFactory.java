@@ -22,6 +22,7 @@ public class DefaultArbitraryCharacterFactory implements ArbitraryCharacterFacto
                 'Ё', '='));
     }
 
+    @SuppressWarnings("UnnecessaryUnicodeEscape")
     private char currentChar = '\uA201';
 
     @Override
